@@ -45,6 +45,10 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    coupons: {
+      type: [String],
+      default: []
+    },
     countInStock: {
       type: Number,
       required: true,

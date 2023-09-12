@@ -16,7 +16,9 @@ userRouter.post(
     if (user && (await user.matchPassword(password))) {
       res.json({
         _id: user._id,
-        name: user.name,
+        fname: user.fname,
+        lname: user.lname,
+        gender: user.gender,
         email: user.email,
         isAdmin: user.isAdmin,
         token: generateToken(user._id),
@@ -33,7 +35,7 @@ userRouter.post(
 userRouter.post(
   "/",
   asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body;
+    const { fame, lname, gender, email, password } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -43,7 +45,9 @@ userRouter.post(
     }
 
     const user = await User.create({
-      name,
+      lname,
+      fname,
+      gender,
       email,
       password,
     });
@@ -51,7 +55,9 @@ userRouter.post(
     if (user) {
       res.status(201).json({
         _id: user._id,
-        name: user.name,
+        fname: user.fname,
+        lname: user.lname,
+        gender: user.gender,
         email: user.email,
         isAdmin: user.isAdmin,
         token: generateToken(user._id),
@@ -73,7 +79,9 @@ userRouter.get(
     if (user) {
       res.json({
         _id: user._id,
-        name: user.name,
+        fname: user.fname,
+        lname: user.lname,
+        gender: user.gender,
         email: user.email,
         isAdmin: user.isAdmin,
         createdAt: user.createdAt,
@@ -93,7 +101,9 @@ userRouter.put(
     const user = await User.findById(req.user._id);
 
     if (user) {
-      user.name = req.body.name || user.name;
+      user.fname = req.body.fname || user.fname;
+      user.lname = req.body.lname || user.lname;
+      user.gender = req.body.gender || user.gender;
       user.email = req.body.email || user.email;
       if (req.body.password) {
         user.password = req.body.password;
@@ -101,7 +111,9 @@ userRouter.put(
       const updatedUser = await user.save();
       res.json({
         _id: updatedUser._id,
-        name: updatedUser.name,
+        fname: updatedUser.fname,
+        lname: updatedUser.lname,
+        gender: updatedUser.gender,
         email: updatedUser.email,
         isAdmin: updatedUser.isAdmin,
         createdAt: updatedUser.createdAt,

@@ -70,7 +70,7 @@ productRoute.post(
         throw new Error("Product already Reviewed");
       }
       const review = {
-        name: req.user.name,
+        name: req.user.fname+" "+req.user.lname,
         rating: Number(rating),
         comment,
         user: req.user._id,
@@ -99,7 +99,8 @@ productRoute.delete(
   asyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (product) {
-      await product.remove();
+      //await product.remove();
+      await Product.deleteOne({ _id: product._id });
       res.json({ message: "Product deleted" });
     } else {
       res.status(404);
@@ -114,7 +115,7 @@ productRoute.post(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const { name, price, description, image, countInStock } = req.body;
+    const { name, price, description, image, coupons, countInStock } = req.body;
     const productExist = await Product.findOne({ name });
     if (productExist) {
       res.status(400);
@@ -125,6 +126,7 @@ productRoute.post(
         price,
         description,
         image,
+        coupons,
         countInStock,
         user: req.user._id,
       });
@@ -145,13 +147,14 @@ productRoute.put(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const { name, price, description, image, countInStock } = req.body;
+    const { name, price, description, image, coupons, countInStock } = req.body;
     const product = await Product.findById(req.params.id);
     if (product) {
       product.name = name || product.name;
       product.price = price || product.price;
       product.description = description || product.description;
       product.image = image || product.image;
+      product.coupons = coupons || product.coupons;
       product.countInStock = countInStock || product.countInStock;
 
       const updatedProduct = await product.save();
