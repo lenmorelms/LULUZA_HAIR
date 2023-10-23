@@ -1,9 +1,45 @@
 import express from "express";
+import multer from "multer";
 import asyncHandler from "express-async-handler";
 import Product from "./../Models/ProductModel.js";
 import { admin, protect } from "./../Middleware/AuthMiddleware.js";
 
 const productRoute = express.Router();
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    return cb(null, "images");
+  },
+  filename: function(req, file, cb) {
+    return cb(null, `${file.originalname}`);
+  }
+});
+const galleryStorage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    return cb(null, "gallery/");
+  },
+  filename: function(req, file, cb) {
+    return cb(null, `${file.originalname + '-' + Date.now()}`);
+  }
+});
+const fileFilter = (req, file, cb) => {
+    const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if(allowedFileTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+const uploadProductImage = multer({
+  storage,
+  limits: { fileSize: 1 * 1024 * 1024 }, // 1MB
+  fileFilter
+});
+const uploadProductGallery = multer({
+  galleryStorage,
+  limits: { fileSize: 1 * 1024 * 1024 }, // 1MB
+  fileFilter
+}).array('gallery', 5);
 
 // GET ALL PRODUCT
 productRoute.get(
@@ -44,6 +80,21 @@ productRoute.get(
   "/:id",
   asyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404);
+      throw new Error("Product not Found");
+    }
+  })
+);
+
+// GET PRODUCTS BY CATEGORY
+productRoute.get(
+  "/:category",
+  asyncHandler(async (req, res) => {
+    // mongo db search through an array
+    // const product = await Product.findById(req.params.category);
     if (product) {
       res.json(product);
     } else {
@@ -114,22 +165,38 @@ productRoute.post(
   "/",
   protect,
   admin,
+  uploadProductImage.single("image"),
   asyncHandler(async (req, res) => {
-    const { name, price, description, image, coupons, countInStock } = req.body;
+    const { name, categories, price, description, coupons, countInStock } = req.body;
+    // Image support
+    const image = req.file.filename;
+    const newProductData = {
+      name,
+      categories,
+      price,
+      description,
+      coupons,
+      countInStock,
+      image
+    }
     const productExist = await Product.findOne({ name });
     if (productExist) {
       res.status(400);
       throw new Error("Product name already exist");
     } else {
-      const product = new Product({
-        name,
-        price,
-        description,
-        image,
-        coupons,
-        countInStock,
-        user: req.user._id,
-      });
+      // const product = new Product({
+      //   name,
+      //   price,
+      //   description,
+      //   image,
+      //   coupons,
+      //   countInStock,
+      //   user: req.user._id,
+      // });
+      
+      // Image support
+      const product = new Product(newProductData);
+
       if (product) {
         const createdproduct = await product.save();
         res.status(201).json(createdproduct);
@@ -146,19 +213,25 @@ productRoute.put(
   "/:id",
   protect,
   admin,
+  uploadProductImage.single("image"),
+  // uploadProductGallery,
   asyncHandler(async (req, res) => {
-    const { name, price, description, image, coupons, countInStock } = req.body;
+    const { name, price, description, coupons, countInStock, gallery } = req.body;
+    // Image support
+    const image = req.file.filename;
     const product = await Product.findById(req.params.id);
     if (product) {
       product.name = name || product.name;
       product.price = price || product.price;
       product.description = description || product.description;
+      product.countInStock = countInStock || product.countInStock;
       product.image = image || product.image;
       product.coupons = coupons || product.coupons;
-      product.countInStock = countInStock || product.countInStock;
+      product.gallery = gallery || product.gallery;
 
       const updatedProduct = await product.save();
       res.json(updatedProduct);
+      // console.log(image)
     } else {
       res.status(404);
       throw new Error("Product not found");

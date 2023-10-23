@@ -6,10 +6,13 @@ import Loading from "../components/LoadingError/Loading";
 import Header from "./../components/Header";
 import { login } from "./../Redux/Actions/userActions";
 
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 const Login = ({ location, history }) => {
   window.scrollTo(0, 0);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordShown, setPasswordShown] = useState(false);
 
   const dispatch = useDispatch();
   const redirect = location.search ? location.search.split("=")[1] : "/";
@@ -22,6 +25,10 @@ const Login = ({ location, history }) => {
       history.push(redirect);
     }
   }, [userInfo, history, redirect]);
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -44,12 +51,18 @@ const Login = ({ location, history }) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          <div className="password-wrapper">
           <input
-            type="password"
+            className="password-input"
+            type={passwordShown ? "text" : "password"}
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <i onClick={togglePasswordVisiblity} className="toggle-password">
+            {passwordShown ? <FaEyeSlash /> : <FaEye />}
+          </i>
+          </div>
           <button type="submit">Login</button>
           <p>
             <Link

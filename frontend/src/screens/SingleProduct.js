@@ -67,7 +67,7 @@ const SingleProduct = ({ history, match }) => {
             <div className="row">
               <div className="col-md-6">
                 <div className="single-image">
-                  <img src={product.image} alt={product.name} />
+                  <img src={`http://localhost:5000/images/${product.image}`} alt={product.name} />
                 </div>
               </div>
               <div className="col-md-6">
@@ -114,12 +114,20 @@ const SingleProduct = ({ history, match }) => {
                             )}
                           </select>
                         </div>
+                        <div className="cart-action-buttons-div">
                         <button
                           onClick={AddToCartHandle}
-                          className="round-black-btn"
+                          className="round-gold-btn"
                         >
                           Add To Cart
                         </button>
+                        <button
+                          onClick="{AddToCartHandle}"
+                          className="round-gold-btn"
+                        >
+                          Whishlist
+                        </button>
+                        </div>
                       </>
                     ) : null}
                   </div>
@@ -149,7 +157,7 @@ const SingleProduct = ({ history, match }) => {
                 ))}
               </div>
               <div className="col-md-6">
-                <h6>WRITE A CUSTOMER REVIEW</h6>
+                <h6>WRITE A REVIEW</h6>
                 <div className="my-4">
                   {loadingCreateReview && <Loading />}
                   {errorCreateReview && (
@@ -187,7 +195,7 @@ const SingleProduct = ({ history, match }) => {
                     <div className="my-3">
                       <button
                         disabled={loadingCreateReview}
-                        className="col-12 bg-black border-0 p-3 rounded text-white"
+                        className="col-12 bg-black border-0 p-3 rounded text-white hover-gold"
                       >
                         SUBMIT
                       </button>

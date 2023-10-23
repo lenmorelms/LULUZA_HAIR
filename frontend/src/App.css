@@ -14,6 +14,7 @@ a {
 }
 a:hover {
   color: black;
+  transition: 0.5s;
 }
 i,
 a,
@@ -40,22 +41,27 @@ textarea:focus {
   padding: 0;
 }
 .Announcement {
-  background-color: #1cb803;
+  background-color:  #1c1c1c;
   padding: 10px 0px 6px 0px;
+  color: #DFDFDB;
+}
+.Announcement Link {
+  color: #DFDFDB;
 }
 .Announcement .col-md-6 p {
-  color: white;
+  color: #DFDFDB;
   margin-right: 6rem;
   font-size: 15px;
 }
 .Announcement .col-12 a {
-  color: white;
+  color: #DFDFDB;
   margin-right: 2rem;
   font-size: 15px;
 }
 /* Header */
 .header {
   padding: 10px 0px 10px 0px;
+  background-color: #DFDFDF;
 }
 .navbar-brand img {
   width: 60%;
@@ -63,6 +69,9 @@ textarea:focus {
 .input-group {
   height: 50px;
   width: 90%;
+}
+.search:focus, .search:hover {
+  border-color: #ebb450;
 }
 .search-button {
   width: 20%;
@@ -109,8 +118,9 @@ textarea:focus {
   margin: 0 !important;
 }
 .dropdown-menu a:hover {
-  background-color: #1cb803 !important;
-  color: #ffffff !important;
+  background-color: #ebb450 !important;
+  color: #000000 !important;
+  transition: 0.5s;
 }
 .mobile-header {
   display: none;
@@ -199,7 +209,8 @@ textarea:focus {
 /* NEWSLATTER */
 .subscribe-section {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.226), rgba(0, 0, 0, 0.226)),
-    url("https://sasshoes-com.s3.us-west-2.amazonaws.com/img/banner-uplift-21.jpg")
+    /* url("https://sasshoes-com.s3.us-west-2.amazonaws.com/img/banner-uplift-21.jpg") */
+    url("https://kolortwist.com/cdn/shop/files/banner-home-hero.webp?v=1692136500&width=2400")
       no-repeat scroll center / cover;
   padding: 100px 0 100px;
 }
@@ -232,20 +243,27 @@ textarea:focus {
   width: 460px;
 }
 .form-section input[type="submit"] {
-  background: #1cb803;
+  background: #ebb450;
   border: 0 none;
   border-radius: 25px;
-  color: #fff;
+  color: #000000;
   height: 52px;
   letter-spacing: 0;
   margin-left: -60px;
   padding: 0 58px;
   text-transform: uppercase;
-  font-size: 12px;
+  /* font-size: 12px; */
+}
+.form-section input[type="submit"]:hover {
+  background-color: #000000;
+  transition: 0.5s;
+  color: #fff;
 }
 /* CONTACT */
 .contactInfo {
-  padding: 70px 0;
+  background-color: #1c1c1c;
+  padding: 30px 0;
+  color: #DFDFDB;
 }
 .contact-Box,
 .box-info,
@@ -258,15 +276,19 @@ textarea:focus {
   width: 80%;
   flex-direction: column;
   padding: 40px 0;
-  box-shadow: 0px 0px 27px 0px rgb(243, 243, 243);
+  /* box-shadow: 0px 0px 27px 0px rgb(243, 243, 243); */
 }
 .info-image {
-  width: 50px;
+  display: flex;
+  /* width: 50px;
   height: 50px;
   border: 2px solid #1cb803;
   border-radius: 100px;
   font-size: 20px;
-  color: #1cb803;
+  color: #1cb803; */
+}
+.info-image > span {
+  padding: 1rem;
 }
 .box-info h5 {
   font-weight: bold;
@@ -276,6 +298,16 @@ textarea:focus {
 }
 .box-info p {
   font-size: 16px;
+}
+.box-info ul li {
+  display: block;
+}
+.box-info ul li a {
+  color: #DFDFDB;
+}
+.box-info ul li a:hover {
+  color: #ebb450;
+  transition: 0.5s;
 }
 
 /* SINGLE PRODUCT */
@@ -337,10 +369,20 @@ textarea:focus {
   border: 0px;
   border-radius: 5px;
 }
-.round-black-btn {
+.cart-action-buttons-div {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.cart-action-buttons-div > button {
+  margin: 1rem;
+}
+.gold-btn {
+  background-color: #ebb450;
+}
+.round-gold-btn {
   border-radius: 4px;
-  background: #000000;
-  color: #fff;
+  background: #ebb450;
+  color: #000000;
   width: 100%;
   height: 50px;
   border: 0;
@@ -349,9 +391,11 @@ textarea:focus {
   font-size: 15px;
   transition: all 0.5s ease-in-out 0s;
 }
-.round-black-btn:hover,
-.round-black-btn:focus {
-  background: #1cb803;
+.round-gold-btn:hover,
+.round-gold-btn:focus {
+  background: #000000;
+  color: #ffffff;
+  transition: 0.5s;
 }
 
 /* LOGIN */
@@ -377,6 +421,13 @@ textarea:focus {
 }
 .Login input:focus {
   outline: 0px;
+  border-color: #000000;
+  transition: 0.5s;
+}
+.Login input:hover {
+  outline: 0px;
+  border-color: #000000;
+  transition: 0.5s;
 }
 .Login button,
 .Login2 button {
@@ -384,10 +435,16 @@ textarea:focus {
   margin-top: 20px;
   padding: 20px 0;
   border: 0;
-  background-color: #1cb803;
+  background-color: #ebb450;
   border-radius: 5px;
   text-transform: uppercase;
-  color: white;
+  color: black;
+}
+.Login button:hover,
+.Login2 button:hover {
+  background-color: #000000;
+  color: #fff;
+  transition: 0.5s;
 }
 .Login button a,
 .Login2 button a {
@@ -481,6 +538,7 @@ textarea:focus {
 }
 .link:hover {
   color: blue;
+  transition: 0.5s;
 }
 .table-responsive {
   width: 100%;
@@ -570,7 +628,8 @@ textarea:focus {
 }
 /* FOOTER */
 .footer {
-  background-color: #ececec;
+  /* background-color: #ececec; */
+  background-color: #000000;
 }
 .card-name {
   width: 4%;
@@ -651,4 +710,41 @@ textarea:focus {
 .page-item.active .page-link {
   background-color: black;
   border: 1px solid black;
+}
+
+/*  Additional CSS */
+/* Password FaEye */
+.password-wrapper {
+  position: relative;
+}
+
+.password-input {
+  width: 100%;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+/* PC HEADER*/
+.header-nav .header-categories {
+  margin-right: 2rem;
+}
+.header-categories:hover {
+  color: #ebb450;
+}
+.shopping-cart-items {
+  display: inline-flex;
+  padding: 0 1rem;
+  margin: 0 1rem;
+  background-color: #ebb450;
+  color: #ffffff;
+  /* width: 30% !important;height: 30% !important; */
+  border-radius: 50%;
+}
+.hover-gold:hover {
+  background-color: #ebb450;
+  color: #000000;
 }

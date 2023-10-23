@@ -40,7 +40,7 @@ const ShopSection = (props) => {
                         <div className="border-product">
                           <Link to={`/products/${product._id}`}>
                             <div className="shopBack">
-                              <img src={product.image} alt={product.name} />
+                              <img src={`http://localhost:5000/images/${product.image}`} alt={product.name} />
                             </div>
                           </Link>
 

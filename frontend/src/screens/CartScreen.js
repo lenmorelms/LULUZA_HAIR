@@ -64,7 +64,7 @@ const CartScreen = ({ match, location, history }) => {
                   <i className="fas fa-times"></i>
                 </div>
                 <div className="cart-image col-md-3">
-                  <img src={item.image} alt={item.name} />
+                  <img src={`http://localhost:5000/images/${item.image}`} alt={item.name} />
                 </div>
                 <div className="cart-text col-md-5 d-flex align-items-center">
                   <Link to={`/products/${item.product}`}>
@@ -105,7 +105,8 @@ const CartScreen = ({ match, location, history }) => {
               </Link>
               {total > 0 && (
                 <div className="col-md-6 d-flex justify-content-md-end mt-3 mt-md-0">
-                  <button onClick={checkOutHandler}>Checkout</button>
+                  {/* <button className="gold-btn" onClick={checkOutHandler}>Checkout</button> */}
+                  <button>Checkout</button>
                 </div>
               )}
             </div>

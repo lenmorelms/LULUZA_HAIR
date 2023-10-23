@@ -123,7 +123,7 @@ const PlaceOrderScreen = ({ history }) => {
                 {cart.cartItems.map((item, index) => (
                   <div className="order-product row" key={index}>
                     <div className="col-md-3 col-6">
-                      <img src={item.image} alt={item.name} />
+                      <img src={`http://localhost:5000/images/${item.image}`} alt={item.name} />
                     </div>
                     <div className="col-md-5 col-6 d-flex align-items-center">
                       <Link to={`/products/${item.product}`}>
