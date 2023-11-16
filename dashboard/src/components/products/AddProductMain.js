@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -17,14 +17,19 @@ const ToastObjects = {
   autoClose: 2000,
 };
 const AddProductMain = () => {
-  // Category options
+  // file refs
+  const singleFileInput = useRef();
+  const multipleFilesInput = useRef();
+
   const [selectedOptions, setSelectedOptions] = useState([]);
-  // Image support
+  // product gallery
+  const [gallery, setGallery] = useState([]);
   const [newProduct, setNewProduct] = useState({
     name: '',
-    categories: '',
+    categories: [],
     price: 0,
     image: '',
+    gallery: gallery,
     countInStock: 0,
     description: ''
   });
@@ -37,7 +42,6 @@ const AddProductMain = () => {
   categories.forEach(element => {
     optionList.push({"value":element.name, "label":element.name});
   });
-  // console.log("optionList  :"+JSON.stringify(optionList));
 
   const productCreate = useSelector((state) => state.productCreate);
   const { loading, error, product } = productCreate;
@@ -45,39 +49,39 @@ const AddProductMain = () => {
   useEffect(() => {
     dispatch(listCategories());
   }, [dispatch] );
-  // Image support
   useEffect(() => {
     if(product) {
       toast.success("Product Added", ToastObjects);
       dispatch({ type: PRODUCT_CREATE_RESET });
       setNewProduct({
         name: '',
-        categories: '',
+        categories: [],
         price: 0,
         image: '',
+        gallery: [],
         countInStock: 0,
         description: ''
       });
+      singleFileInput.current.value = "";
+      multipleFilesInput.current.value = "";
+      setGallery([]);
     }
   }, [product, dispatch]);
 
-  // Image support
   const submitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    // Extract category values
-    let productCategories = [];
-    newProduct.categories.forEach(cat => {
-      productCategories.push(cat.value);
-    });
+    const productCategories = selectedOptions.map(option => option.value);
     formData.append('name', newProduct.name);
     formData.append('categories', productCategories);
     formData.append('price', newProduct.price);
-    formData.append('image', newProduct.image);
+    formData.append('image', singleFileInput.current.files[0]);
+    Array.from(multipleFilesInput.current.files).forEach((file) => {
+      formData.append('gallery', file);
+    });
     formData.append('countInStock', newProduct.countInStock);
     formData.append('description', newProduct.description);
     dispatch(createProduct(formData));
-    // alert(productCategories);
   }
   const handleChange = (e) => {
     setNewProduct({...newProduct, [e.target.name]: e.target.value});
@@ -85,13 +89,23 @@ const AddProductMain = () => {
 
   const handleSelect = (data) => {
     setSelectedOptions(data);
-    setNewProduct({...newProduct, "categories": selectedOptions});
-    console.log("SELECTED  :"+JSON.stringify(selectedOptions));
   }
 
-  const handleImage = (e) => {
-    setNewProduct({...newProduct, [e.target.name]: e.target.files[0]});
-  }
+  // Product gallery
+  const maxImages = 5;
+  const handleGalleryChange = (e) => {
+    if (e.target.files.length > maxImages) {
+      alert(`You can only upload a maximum of ${maxImages} images`);
+      multipleFilesInput.current.value = "";
+      setGallery([]);
+    } 
+    else {
+      setGallery([...e.target.files]);
+    }
+  };
+  // const handleRemoveGallery = (index) => {
+  //   setImages(images.filter((_, i) => i !== index));
+  // };
 
   return (
     <>
@@ -141,7 +155,6 @@ const AddProductMain = () => {
                         placeholder="Select categories"
                         name="categories"
                         required
-                        // value={selectedOptions}
                         onChange={handleSelect}
                         isSearchable={true}
                         isMulti
@@ -210,15 +223,43 @@ const AddProductMain = () => {
                       accept=".png, .jpg, .jpeg"
                       name="image"
                       required
-                      onChange={handleImage}
+                      ref={singleFileInput}
+                      // onChange={handleImage}
                     />
+                  </div>
+                  <div className="mb-4">
+                    <label className="form-label">Product gallery <span style={{color: "red"}}>Upoad not more than 5</span></label>
+                    <input
+                      className="form-control"
+                      type="file"
+                      accept="image/*"
+                      name="gallery"
+                      multiple
+                      required
+                      ref={multipleFilesInput}
+                      onChange={handleGalleryChange}
+                    />
+                    {/* <button onClick={() => handleRemoveImage(index)}>Delete</button> */}
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </form>
-
+        {gallery.length > 0 && (
+        <div className="product-gallery">
+          {Array.from(gallery).map((image, index) => (
+            <>
+            <img 
+              src={URL.createObjectURL(image)}
+              alt={`img-${index}`}
+              key={index}
+              style={{ width: '150px' }} // You can set the dimensions as you want
+            />
+            </>
+          ))}
+        </div>
+      )}
 
       </section>
     </>

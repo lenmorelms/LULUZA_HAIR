@@ -1,6 +1,8 @@
 import express from "express";
 import multer from "multer";
 import asyncHandler from "express-async-handler";
+import fs from "fs";
+import path from "path";
 import Product from "./../Models/ProductModel.js";
 import { admin, protect } from "./../Middleware/AuthMiddleware.js";
 
@@ -11,17 +13,17 @@ const storage = multer.diskStorage({
     return cb(null, "images");
   },
   filename: function(req, file, cb) {
-    return cb(null, `${file.originalname}`);
+    return cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
   }
 });
-const galleryStorage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    return cb(null, "gallery/");
-  },
-  filename: function(req, file, cb) {
-    return cb(null, `${file.originalname + '-' + Date.now()}`);
-  }
-});
+// const galleryStorage = multer.diskStorage({
+//   destination: function(req, file, cb) {
+//     return cb(null, "gallery");
+//   },
+//   filename: function(req, file, cb) {
+//     return cb(null, `${file.originalname + '-' + Date.now()}`);
+//   }
+// });
 const fileFilter = (req, file, cb) => {
     const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
     if(allowedFileTypes.includes(file.mimetype)) {
@@ -31,15 +33,15 @@ const fileFilter = (req, file, cb) => {
     }
 }
 const uploadProductImage = multer({
-  storage,
-  limits: { fileSize: 1 * 1024 * 1024 }, // 1MB
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 1MB
   fileFilter
 });
-const uploadProductGallery = multer({
-  galleryStorage,
-  limits: { fileSize: 1 * 1024 * 1024 }, // 1MB
-  fileFilter
-}).array('gallery', 5);
+// const uploadProductGallery = multer({
+//   storage: galleryStorage,
+//   limits: { fileSize: 1 * 1024 * 1024 }, // 1MB
+//   fileFilter
+// });
 
 // GET ALL PRODUCT
 productRoute.get(
@@ -165,19 +167,35 @@ productRoute.post(
   "/",
   protect,
   admin,
-  uploadProductImage.single("image"),
+  // uploadProductImage.single("image"),
+  // ## NEW CODE
+  // uploadProductImage.single("image"),
+  // uploadProductImage.array("files"),
+  uploadProductImage.fields([{ name: 'image' }, { name: 'gallery', maxCount: 5 }]),
+  // uploadProductGallery.array("multipleFiles"),
   asyncHandler(async (req, res) => {
-    const { name, categories, price, description, coupons, countInStock } = req.body;
+    const { name, categories, price, description, countInStock } = req.body;
     // Image support
-    const image = req.file.filename;
+    // const image = req.file.filename;
+    // ## NEW CODE
+
+    // const singleFile = req.file;
+    // const multipleFiles = req.files;
+    const image = req.files.image[0].filename;
+    // path: req.files.singleFile[0].path,
+    const gallery = req.files.gallery.map((file) => ({
+      filename: file.filename,
+      // path: file.path,
+    }));
     const newProductData = {
       name,
       categories,
       price,
       description,
-      coupons,
       countInStock,
-      image
+      // image: singleFile.filename,
+      image: image,
+      gallery,
     }
     const productExist = await Product.findOne({ name });
     if (productExist) {
@@ -198,7 +216,21 @@ productRoute.post(
       const product = new Product(newProductData);
 
       if (product) {
-        const createdproduct = await product.save();
+        const createdproduct = await product.save()
+        // ## NEW CODE
+        // .then(
+        //   () => {
+        //     createdproduct.gallery = gallery;
+        //   }
+        // );
+        // const galleryFolder = (createdproduct._id).toString();
+        // console.log(galleryFolder);
+        // const __dirname = path.resolve();
+        // const galleryPath = path.join(__dirname, 'gallery', galleryFolder);
+        // fs.mkdir(galleryPath, { recursive: true }, (err) => {
+        //   if(!err) { console.log("folder created"); }
+        //   else { console.log(err); }
+        // });
         res.status(201).json(createdproduct);
       } else {
         res.status(400);
@@ -213,21 +245,32 @@ productRoute.put(
   "/:id",
   protect,
   admin,
-  uploadProductImage.single("image"),
+  // uploadProductImage.single("image"),
+  uploadProductImage.fields([{ name: 'image' }, { name: 'gallery', maxCount: 5 }]),
   // uploadProductGallery,
   asyncHandler(async (req, res) => {
-    const { name, price, description, coupons, countInStock, gallery } = req.body;
+    const { name, price, sale, salePercentage, description, coupons, countInStock } = req.body;
     // Image support
-    const image = req.file.filename;
+    // const image = req.file.filename;
+    // ## NEW CODE
+    // const image = req.files.image[0].filename;
+    // // // path: req.files.singleFile[0].path,
+    // const gallery = req.files.gallery.map((file) => ({
+    //   filename: file.filename,
+    //   // path: file.path,
+    // }));
+
     const product = await Product.findById(req.params.id);
     if (product) {
       product.name = name || product.name;
       product.price = price || product.price;
+      product.sale = sale || product.sale;
+      product.salePercentage = salePercentage || product.salePercentage;
       product.description = description || product.description;
       product.countInStock = countInStock || product.countInStock;
-      product.image = image || product.image;
+      // product.image = image || product.image;
+      // product.gallery = gallery || product.gallery;
       product.coupons = coupons || product.coupons;
-      product.gallery = gallery || product.gallery;
 
       const updatedProduct = await product.save();
       res.json(updatedProduct);

@@ -53,6 +53,20 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    sale: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    salePercentage: {
+      type: Number,
+      default: 0,
+    },
+    saleCount: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     coupons: {
       type: [Object],
       default: [],

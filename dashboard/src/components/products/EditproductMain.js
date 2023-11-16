@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Toast from "./../LoadingError/Toast";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +10,6 @@ import { PRODUCT_UPDATE_RESET } from "../../Redux/Constants/ProductConstants";
 import { toast } from "react-toastify";
 import Message from "../LoadingError/Error";
 import Loading from "../LoadingError/Loading";
-// import { event } from "jquery";
 
 const ToastObjects = {
   pauseOnFocusLoss: false,
@@ -21,27 +20,29 @@ const ToastObjects = {
 
 const EditProductMain = (props) => {
   const { productId } = props;
+  const singleFileInput = useRef();
+  const multipleFilesInput = useRef();
 
-  // const [name, setName] = useState("");
-  // const [price, setPrice] = useState(0);
-  // const [image, setImage] = useState("");
-  // const [countInStock, setCountInStock] = useState(0);
-  // const [description, setDescription] = useState("");
   // product coupons
   const [items, setItems] = useState([{ element: '', value: '' }]);
+  // product image
+  const [image, setImage] = useState('');
   // product gallery
   const [gallery, setGallery] = useState([]);
   // track if image is changed
   const [trackImage, setTrackImage] = useState(false);
+  // track if gallery is changed
+  const [trackGallery, setTrackGallery] = useState(false);
   // edited product
   const [editedProduct, setEditedProduct] = useState({
     name: '',
     price: 0,
-    image: '',
+    salePercentage: 0,
+    image: image,
+    gallery: gallery,
     countInStock: 0,
     description: '',
-    coupons: items,
-    gallery: gallery
+    coupons: items
   });
 
   const dispatch = useDispatch();
@@ -64,55 +65,48 @@ const EditProductMain = (props) => {
       if (!product.name || product._id !== productId) {
         dispatch(editProduct(productId));
       } else {
-        // setName(product.name);
-        // setDescription(product.description);
-        // setCountInStock(product.countInStock);
-        // setImage(product.image);
-        // setPrice(product.price);
+        setItems(product.coupons);
+        setImage(product.image);
+        setGallery(product.gallery);
         setEditedProduct({
           name: product.name,
           price: product.price,
+          salePercentage: product.salePercentage,
           image: product.image,
+          gallery: product.gallery,
           countInStock: product.countInStock,
           description: product.description,
-          coupons: product.coupons,
-          gallery: product.gallery
+          coupons: product.coupons
         });
       }
     }
-  }, [product, dispatch, productId, successUpdate]);
+  }, [product, dispatch, productId, successUpdate, image, gallery]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // const formData = new FormData();
-    // formData.append('_id', productId);
-    // formData.append('name', editedProduct.name);
-    // formData.append('price', editedProduct.price);
-    // formData.append('countInStock', editedProduct.countInStock);
-    // formData.append('description', editedProduct.description);
-    // formData.append('image', editedProduct.image);
-    // formData.append('coupons', items);
-    // formData.append('gallery', gallery);
-
-    const formData = {
+      const finalGallery = Array.from(multipleFilesInput.current.files).map((file) => {
+        return (
+           file
+        );
+      });
+      const formData = {
       '_id': productId,
       'name': editedProduct.name,
       'price': editedProduct.price,
+      'salePercentage': editedProduct.salePercentage,
       'countInStock': editedProduct.countInStock,
       'description': editedProduct.description,
-      'image': editedProduct.image,
+      'image': singleFileInput.current.files[0],
+      'gallery': finalGallery,
       'coupons': items,
-      'gallery': gallery,
-    }
+    };
     dispatch(updateProduct(formData));
-    // alert(typeof formData.image);
   };
   // onChange events
   const handleChange = (e) => {
     setEditedProduct({...editedProduct, [e.target.name]: e.target.value});
   }
   const handleImage = (e) => {
-    setEditedProduct({...editedProduct, [e.target.image]: e.target.files[0]});
     setTrackImage(true);
   }
   // Adding coupon functions
@@ -139,6 +133,7 @@ const EditProductMain = (props) => {
       alert(`You can only upload a maximum of ${maxImages} images`);
     } else {
       setGallery([...e.target.files]);
+      setTrackGallery(true);
     }
   };
   // const handleRemoveGallery = (index) => {
@@ -207,6 +202,20 @@ const EditProductMain = (props) => {
                         />
                       </div>
                       <div className="mb-4">
+                        <label htmlFor="sale" className="form-label">SALE</label>
+                      </div>
+                      <div className="mb-4">
+                        <label htmlFor="sale_percentage" className="form-label">SALE PERCENTAGE</label>
+                        <input 
+                          type="number"
+                          className="form-control"
+                          id="sale_percentage"
+                          name="salePercentage"
+                          value={editedProduct.salePercentage}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="mb-4">
                         <label htmlFor="product_coupons" className="form-label">
                           Add coupons
                         </label>
@@ -271,8 +280,8 @@ const EditProductMain = (props) => {
                           type="file"
                           accept=".png, .jpg, .jpeg"
                           name="image"
-                          value={editProduct.image}
                           onChange={handleImage}
+                          ref={singleFileInput}
                         />
                         {trackImage ?
                         <div></div>
@@ -289,10 +298,28 @@ const EditProductMain = (props) => {
                         <input
                           className="form-control"
                           type="file"
+                          name="gallery"
                           accept="image/*"
                           multiple
                           onChange={handleGalleryChange}
+                          ref={multipleFilesInput}
                         />
+                        {trackGallery ?
+                          <div></div>
+                          :
+                          <div className="product-gallery">
+                            {(editedProduct.gallery).map((gallery, index) => {
+                              return(
+                              <img 
+                               src={`http://localhost:5000/images/${gallery.filename}`}
+                               alt={`img-${index}`}
+                               key={index}
+                               style={{ width: '150px', padding: '3px' }} // You can set the dimensions as you want
+                             />
+                              );
+                            })}
+                          </div>
+                        }
                         {/* <button onClick={() => handleRemoveImage(index)}>Delete</button> */}
                       </div>
                     </>
@@ -302,20 +329,6 @@ const EditProductMain = (props) => {
             </div>
           </div>
         </form>
-        {gallery.length > 0 && (
-        <div className="product-gallery">
-          {Array.from(gallery).map((image, index) => (
-            <>
-            <img 
-              src={URL.createObjectURL(image)}
-              alt={`img-${index}`}
-              key={index}
-              style={{ width: '150px' }} // You can set the dimensions as you want
-            />
-            </>
-          ))}
-        </div>
-      )}
       </section>
     </>
   );
