@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Header from "./../components/Header";
 import Rating from "../components/homeComponents/Rating";
 import { Link } from "react-router-dom";
@@ -12,10 +13,15 @@ import Loading from "../components/LoadingError/Loading";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../Redux/Constants/ProductConstants";
 import moment from "moment";
 
-const SingleProduct = ({ history, match }) => {
+const SingleProduct = ({ history, match, location }) => {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+
+  // currency state
+  const [currency, setCurrency] = useState(location.state.currency);
+  const [conversionRate, setConversionRate] = useState(1);
+  const [defaultCurrency, setDefaultCurrency] = useState(location.state.defaultCurrency);
 
   const productId = match.params.id;
   const dispatch = useDispatch();
@@ -39,7 +45,18 @@ const SingleProduct = ({ history, match }) => {
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
     }
     dispatch(listProductDetails(productId));
-  }, [dispatch, productId, successCreateReview]);
+
+    // Currency Conversion
+    if(currency === 'ZAR') setDefaultCurrency('R');
+    else setDefaultCurrency('$');
+
+    if (currency !== 'ZAR') {
+      axios.get(`https://api.exchangerate-api.com/v4/latest/ZAR`)
+        .then(response => {
+          setConversionRate(response.data.rates[currency]);
+        });
+      } else setConversionRate(1);
+  }, [dispatch, productId, successCreateReview, currency]);
 
   const AddToCartHandle = (e) => {
     e.preventDefault();
@@ -80,7 +97,7 @@ const SingleProduct = ({ history, match }) => {
                   <div className="product-count col-lg-7 ">
                     <div className="flex-box d-flex justify-content-between align-items-center">
                       <h6>Price</h6>
-                      <span>${product.price}</span>
+                      <span>{defaultCurrency} {(product.price * conversionRate).toFixed(2)} {currency}</span>
                     </div>
                     <div className="flex-box d-flex justify-content-between align-items-center">
                       <h6>Status</h6>

@@ -1,5 +1,7 @@
 import React from "react";
 import Header from "./../components/Header";
+import CurrencySelector from "../components/CurrencySelector";
+import WhatsAppIcon from "../components/WhatsAppIcon";
 import ShopSection from "./../components/homeComponents/ShopSection";
 import ContactInfo from "./../components/homeComponents/ContactInfo";
 import CalltoActionSection from "./../components/homeComponents/CalltoActionSection";
@@ -12,6 +14,8 @@ const HomeScreen = ({ match }) => {
   return (
     <div>
       <Header />
+      {/* <CurrencySelector /> */}
+      <WhatsAppIcon />
       <ShopSection keyword={keyword} pagenumber={pagenumber} />
       <CalltoActionSection />
       <ContactInfo />

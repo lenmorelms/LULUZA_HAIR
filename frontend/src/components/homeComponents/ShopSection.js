@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Rating from "./Rating";
 import Pagination from "./pagination";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +9,9 @@ import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
 
 const ShopSection = (props) => {
+  const [currency, setCurrency] = useState('ZAR');
+  const [conversionRate, setConversionRate] = useState(1);
+  const [defaultCurrency, setDefaultCurrency] = useState('R');
   const { keyword, pagenumber } = props;
   const dispatch = useDispatch();
 
@@ -17,8 +21,31 @@ const ShopSection = (props) => {
   useEffect(() => {
     dispatch(listProduct(keyword, pagenumber));
   }, [dispatch, keyword, pagenumber]);
+
+  useEffect(() => {
+    if(currency === 'ZAR') setDefaultCurrency('R');
+    else setDefaultCurrency('$');
+
+    if (currency !== 'ZAR') {
+      axios.get(`https://api.exchangerate-api.com/v4/latest/ZAR`)
+        .then(response => {
+          setConversionRate(response.data.rates[currency]);
+        });
+      } else setConversionRate(1);
+  }, [currency]);
+
+  const handleCurrencyChange = (event) => {
+    setCurrency(event.target.value);
+  };
   return (
     <>
+    {/* Currency Converter */}
+    <div className="currency-selector">
+            <select value={currency} onChange={handleCurrencyChange}>
+                <option value="ZAR">ZAR</option>
+                <option value="USD">USD</option>
+            </select>
+        </div>
       <div className="container">
         <div className="section">
           <div className="row">
@@ -38,7 +65,11 @@ const ShopSection = (props) => {
                         key={product._id}
                       >
                         <div className="border-product">
-                          <Link to={`/products/${product._id}`}>
+                          {/* <Link to={`/products/${product._id}`}> */}
+                          <Link to= {{
+                            pathname: `/products/${product._id}`,
+                            state: { currency, defaultCurrency }
+                          }}>
                             <div className="shopBack">
                               <img src={`http://localhost:5000/images/${product.image}`} alt={product.name} />
                             </div>
@@ -55,7 +86,7 @@ const ShopSection = (props) => {
                               value={product.rating}
                               text={`${product.numReviews} reviews`}
                             />
-                            <h3>${product.price}</h3>
+                            <h3>{defaultCurrency} {(product.price * conversionRate).toFixed(2)}</h3>
                           </div>
                         </div>
                       </div>

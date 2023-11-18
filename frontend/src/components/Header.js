@@ -7,8 +7,10 @@ import { FaSearch } from "react-icons/fa";
 import { FaShoppingBag, FaShoppingCart, FaShoppingBasket } from "react-icons/fa";
 import { listCategory } from "../Redux/Actions/CategoryActions";
 
-const HeaderBU = () => {
+const Header = () => {
   const [keyword, setKeyword] = useState();
+  const [isCollectionHovered, setIsCollectionHovered] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const dispatch = useDispatch();
   let history = useHistory();
 
@@ -37,7 +39,10 @@ const HeaderBU = () => {
   };
   return (
     <div>
-      {/* Top Header */}
+      {/* Header */}
+
+      {/* PC HEADER */}
+      <div className="pc-header">
       <div className="Announcement ">
         <div className="container">
           <div className="row">
@@ -91,21 +96,160 @@ const HeaderBU = () => {
           </div>
         </div>
       </div>
-
-      {/* Header */}
       <div className="header">
         <div className="container">
+      <div className="row">
+              <div className="col-md-8 col-8 d-flex align-items-center header-nav">
 
-          {/* MOBILE HEADER */}
-          <div className="mobile-header">
+                <div
+                  onClick={() => {
+                    isCollectionHovered ? setIsCollectionHovered(false) : setIsCollectionHovered(true)
+                  }}
+                  style={{ transition: "0.5s" }}
+                >
+                <Link className="header-categories header-collection" id="header_collection" to="">
+                  Collection
+                </Link>
+                </div>
+                <div>
+                <Link className="header-categories" to="">
+                  New Arrivals
+                </Link>
+                </div>
+                <div>
+                <Link className="header-categories" to="">
+                  Best Seller
+                </Link>
+                </div>
+                <div>
+                <Link className="header-categories" to="">
+                  Sale
+                </Link>
+                </div>
+                <div>
+                <Link className="header-categories" to="">
+                  WishList
+                </Link>
+                </div>
+              </div>
+              <div className="col-md-4 d-flex align-items-center justify-content-end Login-Register">
+                  <>
+                  <form onSubmit={submitHandler} style={{ position: 'relative' }}>
+                  <input
+                    type="text"
+                    className="form-control rounded search"
+                    onChange={(e) => setKeyword(e.target.value)}
+                    placeholder="Search..."
+                    style={{ paddingRight: '30px', width: '100%' }} // Make room for the search icon
+                  />
+                  <FaSearch
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      right: '10px',
+                      transform: 'translateY(-50%)',
+                      cursor: 'pointer'
+                    }}
+                    onClick={submitHandler}
+                  />
+                  </form>
+                  </>
+              </div>
+            </div>
+            </div>
+            </div>
+              <div className="container">
+                {isCollectionHovered && (
+                  <div className="header-hover-container">
+                    {categories.map((category) => (
+                      <div>
+                      <Link className="header-dropdown-link" to={`/category/${category.name}`}>
+                        {category.name}
+                      </Link>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                </div>
+      </div>
+
+      {/* MOBILE HEADER */}
+      <div className="mobile-header">
             <div className="container ">
               <div className="row ">
+                <div className="col-3 d-flex align-items-center">
+                  <div className="menu-icon" onClick={() => setIsMobileNavOpen(!isMobileNavOpen) }>
+                    <div className="line"></div>
+                    <div className="line"></div>
+                    <div className="line"></div>
+                  </div>
+                  {/* {isMobileNavOpen ? (
+                  <div className="close-icon" onClick={() => setIsMobileNavOpen(false)}>
+                    <div className="lineX line1"></div>
+                    <div className="lineX line2"></div>
+                  </div>
+                  ) : (
+                    <div className="menu-icon" onClick={() => setIsMobileNavOpen(true)}>
+                    <div className="line"></div>
+                    <div className="line"></div>
+                    <div className="line"></div>
+                  </div>
+                  )} */}
+                  {isMobileNavOpen && (
+                    <div className="dropdown">
+                      <div
+                  onClick={() => {
+                    isCollectionHovered ? setIsCollectionHovered(false) : setIsCollectionHovered(true)
+                  }}
+                  style={{ transition: "0.5s" }}
+                >
+                <Link className="header-categories mobile-collection" id="header_collection" to="">
+                  Collection
+                </Link>
+                {isCollectionHovered && (
+                  // <div className="header-hover-container">
+                  <>
+                    {categories.map((category) => (
+                      <div>
+                      <Link className="header-dropdown-link" to={`/category/${category.name}`}>
+                        {category.name}
+                      </Link>
+                      </div>
+                    ))}
+                    </>
+                  // </div>
+                )}
+                </div>
+                <div>
+                <Link className="mobile-categories" to="">
+                  New Arrivals
+                </Link>
+                </div>
+                <div>
+                <Link className="mobile-categories" to="">
+                  Best Seller
+                </Link>
+                </div>
+                <div>
+                <Link className="mobile-categories" to="">
+                  Sale
+                </Link>
+                </div>
+                <div>
+                <Link className="mobile-categories" to="">
+                  WishList
+                </Link>
+                </div>
+                    </div>
+                  )}
+
+                </div>
                 <div className="col-6 d-flex align-items-center">
-                  <Link className="navbar-brand" to="/">
-                    <img alt="logo" src="/images/logo.png" />
+                  <Link className="navbar-brand" to="/" style={{color: "#000000"}}>
+                    Luluza hair
                   </Link>
                 </div>
-                <div className="col-6 d-flex align-items-center justify-content-end Login-Register">
+                <div className="col-3 d-flex align-items-center justify-content-end Login-Register">
                   {userInfo ? (
                     <div className="btn-group">
                       <button
@@ -159,7 +303,7 @@ const HeaderBU = () => {
                     <span className="badge">{cartItems.length}</span>
                   </Link>
                 </div>
-                <div className="col-6 d-flex align-items-center">
+                <div className="col-12 d-flex align-items-center">
                   <form onSubmit={submitHandler} className="input-group">
                     <input
                       type="search"
@@ -176,50 +320,8 @@ const HeaderBU = () => {
             </div>
           </div>
 
-          {/* PC HEADER */}
-          <div className="pc-header">
-            <div className="row">
-              {/* <div className="col-md-3 col-4 d-flex align-items-center">
-                <Link className="navbar-brand" to="/">
-                  <img alt="logo" src="/images/logo.png" />
-                </Link>
-              </div> */}
-              <div className="col-md-8 col-8 d-flex align-items-center header-nav">
-                {categories.map((category) => (
-                  <Link className="header-categories" to={`/category/${category.name}`}>
-                    {category.name}
-                  </Link>
-                ))}
-              </div>
-              <div className="col-md-4 d-flex align-items-center justify-content-end Login-Register">
-                  <>
-                  <form onSubmit={submitHandler} style={{ position: 'relative' }}>
-                  <input
-                    type="text"
-                    className="form-control rounded search"
-                    onChange={(e) => setKeyword(e.target.value)}
-                    placeholder="Search..."
-                    style={{ paddingRight: '30px', width: '100%' }} // Make room for the search icon
-                  />
-                  <FaSearch
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      right: '10px',
-                      transform: 'translateY(-50%)',
-                      cursor: 'pointer'
-                    }}
-                    onClick={submitHandler}
-                  />
-                  </form>
-                  </>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
 
-export default HeaderBU;
+export default Header
