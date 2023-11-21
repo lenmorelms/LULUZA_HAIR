@@ -192,7 +192,7 @@ const OrderScreen = ({ match }) => {
                   <tbody>
                     <tr>
                       <td>
-                        <strong>Products</strong>
+                        <strong>Productssss</strong>
                       </td>
                       <td>${order.itemsPrice}</td>
                     </tr>

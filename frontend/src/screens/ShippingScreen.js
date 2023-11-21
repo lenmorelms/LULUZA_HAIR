@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { FaShoppingCart } from "react-icons/fa";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import Header from "../components/Header";
 import { saveShippingAddress } from "../Redux/Actions/cartActions";
+import WhatsAppIcon from "../components/WhatsAppIcon";
 
-const ShippingScreen = ({ history }) => {
+const ShippingScreen = ({ history, location}) => {
+  // currency state
+  const [currency, setCurrency] = useState(location.state.currency);
+  const [conversionRate, setConversionRate] = useState(1);
+  const [defaultCurrency, setDefaultCurrency] = useState(location.state.defaultCurrency);
   window.scrollTo(0, 0);
 
   const cart = useSelector((state) => state.cart);
-  const { shippingAddress } = cart;
+  const { shippingAddress, cartItems } = cart;
 
   const [address, setAddress] = useState(shippingAddress.address);
   const [city, setCity] = useState(shippingAddress.city);
@@ -19,11 +26,31 @@ const ShippingScreen = ({ history }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
-    history.push("/payment");
+    // history.push("/payment");
+    history.push({
+      pathname: "/payment",
+      state: { currency, defaultCurrency }
+    });
   };
   return (
     <>
       <Header />
+      <WhatsAppIcon />
+       {/* Cart Icon */}
+    <div className="cart-icon">
+    <Link to={{
+      pathname: "/cart",
+      state: { currency, defaultCurrency }
+      }}
+    >
+        <div>
+          <div className="shopping-cart-items">
+            <FaShoppingCart />
+            <p>{cartItems.length}</p>
+          </div>
+        </div>
+     </Link>
+    </div>
       <div className="container d-flex justify-content-center align-items-center login-center">
         <form
           className="Login col-md-8 col-lg-4 col-11"

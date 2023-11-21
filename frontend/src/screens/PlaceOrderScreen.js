@@ -1,16 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { createOrder } from "../Redux/Actions/OrderActions";
 import { ORDER_CREATE_RESET } from "../Redux/Constants/OrderConstants";
 import Header from "./../components/Header";
 import Message from "./../components/LoadingError/Error";
+import WhatsAppIcon from "../components/WhatsAppIcon";
 
-const PlaceOrderScreen = ({ history }) => {
+const PlaceOrderScreen = ({ history, location }) => {
+  const [currency, setCurrency] = useState(location.state.currency);
+  const [conversionRate, setConversionRate] = useState(1);
+  const [defaultCurrency, setDefaultCurrency] = useState(location.state.defaultCurrency);
   window.scrollTo(0, 0);
 
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -34,11 +41,17 @@ const PlaceOrderScreen = ({ history }) => {
   const { order, success, error } = orderCreate;
 
   useEffect(() => {
+    if (currency !== 'ZAR') {
+      axios.get(`https://api.exchangerate-api.com/v4/latest/ZAR`)
+        .then(response => {
+          setConversionRate(response.data.rates[currency]);
+        });
+    } else setConversionRate(1);
     if (success) {
       history.push(`/order/${order._id}`);
       dispatch({ type: ORDER_CREATE_RESET });
     }
-  }, [history, dispatch, success, order]);
+  }, [history, dispatch, success, order, currency]);
 
   const placeOrderHandler = () => {
     dispatch(
@@ -46,10 +59,11 @@ const PlaceOrderScreen = ({ history }) => {
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
-        itemsPrice: cart.itemsPrice,
-        shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
+        currency: currency,
+        itemsPrice: (cart.itemsPrice * conversionRate).toFixed(2),
+        shippingPrice: (cart.shippingPrice * conversionRate).toFixed(2),
+        taxPrice: (cart.taxPrice * conversionRate).toFixed(2),
+        totalPrice: (cart.totalPrice * conversionRate).toFixed(2),
       })
     );
   };
@@ -57,6 +71,22 @@ const PlaceOrderScreen = ({ history }) => {
   return (
     <>
       <Header />
+      <WhatsAppIcon />
+      {/* Cart Icon */}
+    <div className="cart-icon">
+    <Link to={{
+      pathname: "/cart",
+      state: { currency, defaultCurrency }
+      }}
+    >
+        <div>
+          <div className="shopping-cart-items">
+            <FaShoppingCart />
+            <p>{cartItems.length}</p>
+          </div>
+        </div>
+     </Link>
+    </div>
       <div className="container">
         <div className="row  order-detail">
           <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
@@ -70,7 +100,7 @@ const PlaceOrderScreen = ({ history }) => {
                 <h5>
                   <strong>Customer</strong>
                 </h5>
-                <p>{userInfo.name}</p>
+                <p>{userInfo.fname} {userInfo.lname}</p>
                 <p>{userInfo.email}</p>
               </div>
             </div>
@@ -136,7 +166,7 @@ const PlaceOrderScreen = ({ history }) => {
                     </div>
                     <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center ">
                       <h4>SUBTOTAL</h4>
-                      <h6>${item.qty * item.price}</h6>
+                      <h6>{defaultCurrency}{((item.qty * item.price) * conversionRate).toFixed(2)}</h6>
                     </div>
                   </div>
                 ))}
@@ -151,25 +181,25 @@ const PlaceOrderScreen = ({ history }) => {
                   <td>
                     <strong>Products</strong>
                   </td>
-                  <td>${cart.itemsPrice}</td>
+                  <td>{defaultCurrency}{(cart.itemsPrice * conversionRate).toFixed(2)}</td>
                 </tr>
                 <tr>
                   <td>
                     <strong>Shipping</strong>
                   </td>
-                  <td>${cart.shippingPrice}</td>
+                  <td>{defaultCurrency}{(cart.shippingPrice * conversionRate).toFixed(2)}</td>
                 </tr>
                 <tr>
                   <td>
                     <strong>Tax</strong>
                   </td>
-                  <td>${cart.taxPrice}</td>
+                  <td>{defaultCurrency}{(cart.taxPrice * conversionRate).toFixed(2)}</td>
                 </tr>
                 <tr>
                   <td>
                     <strong>Total</strong>
                   </td>
-                  <td>${cart.totalPrice}</td>
+                  <td>{defaultCurrency}{(cart.totalPrice * conversionRate).toFixed(2)}</td>
                 </tr>
               </tbody>
             </table>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { FaShoppingCart } from "react-icons/fa";
 import Header from "./../components/Header";
 import Rating from "../components/homeComponents/Rating";
 import { Link } from "react-router-dom";
@@ -12,6 +13,7 @@ import {
 import Loading from "../components/LoadingError/Loading";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../Redux/Constants/ProductConstants";
 import moment from "moment";
+import WhatsAppIcon from "../components/WhatsAppIcon";
 
 const SingleProduct = ({ history, match, location }) => {
   const [qty, setQty] = useState(1);
@@ -25,6 +27,9 @@ const SingleProduct = ({ history, match, location }) => {
 
   const productId = match.params.id;
   const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
@@ -60,7 +65,11 @@ const SingleProduct = ({ history, match, location }) => {
 
   const AddToCartHandle = (e) => {
     e.preventDefault();
-    history.push(`/cart/${productId}?qty=${qty}`);
+    // history.push(`/cart/${productId}?qty=${qty}`);
+    history.push({
+      pathname: `/cart/${productId}?qty=${qty}`,
+      state: { currency, defaultCurrency }
+    });    
   };
   const submitHandler = (e) => {
     e.preventDefault();
@@ -71,9 +80,35 @@ const SingleProduct = ({ history, match, location }) => {
       })
     );
   };
+  const handleCurrencyChange = (event) => {
+    setCurrency(event.target.value);
+  };
   return (
     <>
       <Header />
+      <WhatsAppIcon />
+      {/* Currency Converter */}
+    <div className="currency-selector">
+      <select value={currency} onChange={handleCurrencyChange}>
+        <option value="ZAR">ZAR</option>
+        <option value="USD">USD</option>
+      </select>
+    </div>
+    {/* Cart Icon */}
+    <div className="cart-icon">
+    <Link to={{
+      pathname: "/cart",
+      state: { currency, defaultCurrency }
+      }}
+    >
+        <div>
+          <div className="shopping-cart-items">
+            <FaShoppingCart />
+            <p>{cartItems.length}</p>
+          </div>
+        </div>
+     </Link>
+    </div>
       <div className="container single-product">
         {loading ? (
           <Loading />
@@ -97,7 +132,7 @@ const SingleProduct = ({ history, match, location }) => {
                   <div className="product-count col-lg-7 ">
                     <div className="flex-box d-flex justify-content-between align-items-center">
                       <h6>Price</h6>
-                      <span>{defaultCurrency} {(product.price * conversionRate).toFixed(2)} {currency}</span>
+                      <span>{defaultCurrency} {(product.price * conversionRate).toFixed(2)}</span>
                     </div>
                     <div className="flex-box d-flex justify-content-between align-items-center">
                       <h6>Status</h6>

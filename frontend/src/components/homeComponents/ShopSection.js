@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { FaShoppingCart } from "react-icons/fa";
 import Rating from "./Rating";
 import Pagination from "./pagination";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,10 +11,13 @@ import Message from "../LoadingError/Error";
 
 const ShopSection = (props) => {
   const [currency, setCurrency] = useState('ZAR');
-  const [conversionRate, setConversionRate] = useState(1);
   const [defaultCurrency, setDefaultCurrency] = useState('R');
+  const [conversionRate, setConversionRate] = useState(1);
   const { keyword, pagenumber } = props;
   const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
 
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
@@ -41,11 +45,26 @@ const ShopSection = (props) => {
     <>
     {/* Currency Converter */}
     <div className="currency-selector">
-            <select value={currency} onChange={handleCurrencyChange}>
-                <option value="ZAR">ZAR</option>
-                <option value="USD">USD</option>
-            </select>
+        <select value={currency} onChange={handleCurrencyChange}>
+          <option value="ZAR">ZAR</option>
+           <option value="USD">USD</option>
+        </select>
+    </div>
+    {/* Cart Icon */}
+    <div className="cart-icon">
+    <Link to={{
+      pathname: "/cart",
+      state: { currency, defaultCurrency }
+      }}
+    >
+        <div>
+          <div className="shopping-cart-items">
+            <FaShoppingCart />
+            <p>{cartItems.length}</p>
+          </div>
         </div>
+     </Link>
+    </div>
       <div className="container">
         <div className="section">
           <div className="row">
