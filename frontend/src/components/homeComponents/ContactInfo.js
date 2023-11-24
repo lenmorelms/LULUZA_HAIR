@@ -35,7 +35,9 @@ const ContactInfo = () => {
               <span><a href=""><img src="https://superbalist.com/public/images/social/twitter-vector-2021.svg" alt="twitter" /></a></span>
               <span><a href=""><img src="https://superbalist.com/public/images/social/youtube-vector-2021.svg" alt="youtube" /></a></span>
             </div>
-            <h3>LOGO GOES HERE</h3>
+            <div className="footer-image">
+              <img src="http://localhost:5000/images/footer_logo_2.png" alt="Logo"/>
+            </div>
           </div>
         </div>
       </div>

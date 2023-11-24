@@ -54,7 +54,7 @@ export const productListCategoryReducer = (state = { products: [] }, action) => 
 
 // SINGLE PRODUCT
 export const productDetailsReducer = (
-  state = { product: { reviews: [] } },
+  state = { product: { gallery: [], reviews: [] } },
   action
 ) => {
   switch (action.type) {

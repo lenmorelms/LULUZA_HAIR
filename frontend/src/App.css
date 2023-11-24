@@ -392,6 +392,16 @@ textarea:focus {
 .info-image > span {
   padding: 1rem;
 }
+.footer-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: 2rem; */
+}
+.footer-image img {
+  width: 60%;
+  border-radius: 50%;
+}
 .box-info h5 {
   font-weight: bold;
   font-size: 19px;
@@ -420,15 +430,34 @@ textarea:focus {
 .single-image {
   background-color: #f3fbf7;
   margin-right: 20px;
-  height: 700px;
+  height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .single-image img {
-  width: 90%;
-  height: 700px;
+  width: 100%;
+  height: 500px;
   object-fit: contain;
+}
+.gallery-images {
+  background-color: #f3fbf7;
+  margin: 3px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.gallery-images img {
+  width: 100%;
+  height: 100px;
+  margin: 0.5rem;
+  object-fit: contain;
+  transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out;
+}
+.gallery-images:hover img {
+  transform: scale(1.8);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .product-name {
   font-size: 25px;

@@ -88,10 +88,10 @@ const Header = () => {
                   </>
                 )}
               {/* Cart */}
-              <Link to="/cart">
+              {/* <Link to="/cart">
                 <FaShoppingCart />
                 <div className="shopping-cart-items">{cartItems.length}</div>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@ const Header = () => {
                   }}
                   style={{ transition: "0.5s" }}
                 >
-                <Link className="header-categories header-collection" id="header_collection" to="">
+                <Link className="header-categories header-collection" id="header_collection" to="###">
                   Collection
                 </Link>
                 </div>
@@ -298,10 +298,10 @@ const Header = () => {
                     </div>
                   )}
 
-                  <Link to="/cart" className="cart-mobile-icon">
+                  {/* <Link to="/cart" className="cart-mobile-icon">
                     <i className="fas fa-shopping-bag"></i>
                     <span className="badge">{cartItems.length}</span>
-                  </Link>
+                  </Link> */}
                 </div>
                 <div className="col-12 d-flex align-items-center">
                   <form onSubmit={submitHandler} className="input-group">

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removefromcart } from "./../Redux/Actions/cartActions";
 import WhatsAppIcon from "../components/WhatsAppIcon";
+import { createWishList } from "../Redux/Actions/WishListActions";
 
 const CartScreen = ({ match, location, history }) => {
   // currency state
@@ -46,6 +47,21 @@ const CartScreen = ({ match, location, history }) => {
       pathname: "/shipping",
       state: { currency, defaultCurrency }
     })
+  };
+
+  const wishListHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      createWishList({
+        wishListItems: cartItems,
+        quantity: cartItems.length,
+        currency: currency,
+        itemsPrice: (cart.itemsPrice * conversionRate).toFixed(2),
+        shippingPrice: (cart.shippingPrice * conversionRate).toFixed(2),
+        taxPrice: (cart.taxPrice * conversionRate).toFixed(2),
+        totalPrice: (cart.totalPrice * conversionRate).toFixed(2),
+      })
+    );
   };
 
   const removeFromCartHandle = (id) => {
@@ -161,7 +177,16 @@ const CartScreen = ({ match, location, history }) => {
               </Link>
               {total > 0 && (
                 <div className="col-md-6 d-flex justify-content-md-end mt-3 mt-md-0">
-                  <button className="gold-btn" onClick={checkOutHandler}>Checkout</button>
+                  <button 
+                    className="gold-btn" 
+                    onClick={checkOutHandler}
+                    style={{ marginRight: "1rem" }}
+                  >Checkout</button>
+                  <button 
+                    className="gold-btn"
+                    onClick={wishListHandler}
+                    style={{ marginLeft: "1rem", backgroundColor: "#ebb450", color: "#000" }}
+                  >Add To WishList</button>
                   {/* <button>Checkout</button> */}
                 </div>
               )}

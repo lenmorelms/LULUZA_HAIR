@@ -5,14 +5,15 @@ import ContactInfo from "./../components/homeComponents/ContactInfo";
 import CalltoActionSection from "./../components/homeComponents/CalltoActionSection";
 import Footer from "./../components/Footer";
 
-const HomeScreen = ({ match }) => {
+const CategoryScreen = ({ match }) => {
   window.scrollTo(0, 0);
+  const category = match.params.category;
   const keyword = match.params.keyword;
   const pagenumber = match.params.pagenumber;
   return (
     <div>
       <Header />
-      <ShopCategorySection keyword={keyword} pagenumber={pagenumber} />
+      <ShopCategorySection category={category} keyword={keyword} pagenumber={pagenumber} />
       <CalltoActionSection />
       <ContactInfo />
       <Footer />
@@ -20,4 +21,4 @@ const HomeScreen = ({ match }) => {
   );
 };
 
-export default HomeScreen;
+export default CategoryScreen;

@@ -4,6 +4,7 @@ import "./responsive.css";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomeScreen from "./screens/HomeScreen";
+import CategoryScreen from "./screens/CategoryScreen";
 import SingleProduct from "./screens/SingleProduct";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/" component={HomeScreen} exact />
         <Route path="/search/:keyword" component={HomeScreen} exact />
         <Route path="/page/:pagenumber" component={HomeScreen} exact />
+        <Route path="/category/:category" component={CategoryScreen} exact />
         <Route
           path="/search/:keyword/page/:pageNumber"
           component={HomeScreen}

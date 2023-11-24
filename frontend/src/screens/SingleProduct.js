@@ -121,6 +121,11 @@ const SingleProduct = ({ history, match, location }) => {
                 <div className="single-image">
                   <img src={`http://localhost:5000/images/${product.image}`} alt={product.name} />
                 </div>
+                <div className="gallery-images">
+                  {product.gallery.map((gal, index) => {
+                  return <img key={index} src={`http://localhost:5000/images/${gal.filename}`} alt={product.name} />
+                })}
+                </div>
               </div>
               <div className="col-md-6">
                 <div className="product-dtl">
@@ -173,12 +178,12 @@ const SingleProduct = ({ history, match, location }) => {
                         >
                           Add To Cart
                         </button>
-                        <button
+                        {/* <button
                           onClick="{AddToCartHandle}"
                           className="round-gold-btn"
                         >
-                          Whishlist
-                        </button>
+                          Add To Wishlist
+                        </button> */}
                         </div>
                       </>
                     ) : null}
