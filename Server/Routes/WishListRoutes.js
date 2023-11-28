@@ -36,7 +36,7 @@ wishListRouter.post(
         totalPrice,
       });
 
-      const createWishList = await WishList.save();
+      const createWishList = await wishList.save();
       res.status(201).json(createWishList);
     }
   })

@@ -14,6 +14,7 @@ import {
 } from "../Constants/WishListConstants";
 import axios from "axios";
 import { logout } from "./userActions";
+import { CART_CLEAR_ITEMS } from "../Constants/CartConstants";
 
 // CREATE WISHLIST
 export const createWishList = (wishList) => async (dispatch, getState) => {
@@ -33,6 +34,7 @@ export const createWishList = (wishList) => async (dispatch, getState) => {
 
     const { data } = await axios.post(`/api/wishlist`, wishList, config);
     dispatch({ type: WISHLIST_CREATE_SUCCESS, payload: data });
+    dispatch({ type: CART_CLEAR_ITEMS, payload: data });
   } catch (error) {
     const message =
       error.response && error.response.data.message

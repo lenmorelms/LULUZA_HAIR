@@ -6,7 +6,11 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removefromcart } from "./../Redux/Actions/cartActions";
 import WhatsAppIcon from "../components/WhatsAppIcon";
+import Message from "../components/LoadingError/Error";
 import { createWishList } from "../Redux/Actions/WishListActions";
+import { WISHLIST_CREATE_RESET } from "../Redux/Constants/WishListConstants";
+import Loading from "../components/LoadingError/Loading";
+import Toast from "../components/LoadingError/Toast";
 
 const CartScreen = ({ match, location, history }) => {
   // currency state
@@ -21,6 +25,9 @@ const CartScreen = ({ match, location, history }) => {
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+
+  const wishListCreate = useSelector((state) => state.wishListCreate);
+  const { wishList, success, error, loading } = wishListCreate;
 
   // const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2);
   const total = (cartItems.reduce((a, i) => a + i.qty * i.price, 0) * conversionRate).toFixed(2);
@@ -39,7 +46,12 @@ const CartScreen = ({ match, location, history }) => {
           setConversionRate(response.data.rates[currency]);
         });
       } else setConversionRate(1);
-  }, [dispatch, productId, qty, currency]);
+
+      if (success) {
+        history.push(`/`);
+        dispatch({ type: WISHLIST_CREATE_RESET });
+      }
+  }, [dispatch, productId, qty, currency, success]);
 
   const checkOutHandler = () => {
     // history.push("/login?redirect=shipping");
@@ -51,6 +63,22 @@ const CartScreen = ({ match, location, history }) => {
 
   const wishListHandler = (e) => {
     e.preventDefault();
+    // Calculate Price
+    const addDecimals = (num) => {
+      return (Math.round(num * 100) / 100).toFixed(2);
+    };
+
+    cart.itemsPrice = addDecimals(
+      cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    );
+    cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
+    cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
+    cart.totalPrice = (
+      Number(cart.itemsPrice) +
+      Number(cart.shippingPrice) +
+      Number(cart.taxPrice)
+    ).toFixed(2);
+    // console.log(">>>> "+(cart.totalPrice* conversionRate).toFixed(2));
     dispatch(
       createWishList({
         wishListItems: cartItems,
@@ -97,6 +125,13 @@ const CartScreen = ({ match, location, history }) => {
      </Link>
     </div>
       <div className="container">
+        {/* OPENING */}
+        {loading ? (
+          <Loading />
+        ) : error ? (
+          <Message variant="alert-danger">{error}</Message>
+        ) : (
+        <>
         {cartItems.length === 0 ? (
           <div className=" alert alert-info text-center mt-3">
             Your cart is empty
@@ -168,7 +203,7 @@ const CartScreen = ({ match, location, history }) => {
             <div className="cart-buttons d-flex align-items-center row">
               <Link 
                 to={{
-                  pathname: "/shipping",
+                  pathname: "/",
                   state: { currency, defaultCurrency }
                 }}
                 className="col-md-6 "
@@ -189,9 +224,18 @@ const CartScreen = ({ match, location, history }) => {
                   >Add To WishList</button>
                   {/* <button>Checkout</button> */}
                 </div>
+                
               )}
             </div>
+            {error && (
+                  <div className="my-3 col-12">
+                    <Message variant="alert-danger">{error}</Message>
+                  </div>
+                )}
           </>
+        )}
+        {/* CLOSSING */}
+        </>
         )}
       </div>
     </>
