@@ -20,6 +20,14 @@ wishListRouter.post(
       totalPrice,
     } = req.body;
 
+    const existingWishList = await WishList.findOne({ user: req.user._id });
+
+    if (existingWishList) {
+      res.status(400);
+      throw new Error("You already have a wishlist");
+      return;
+    }
+
     if (wishListItems && wishListItems.length === 0) {
       res.status(400);
       throw new Error("No wishList items");
@@ -58,7 +66,7 @@ wishListRouter.get(
 wishListRouter.get(
   "/",
   protect,
-  admin,
+  // admin,
   asyncHandler(async (req, res) => {
     const wishList = await WishList.find({ user: req.user._id }).sort({ _id: -1 });
     res.json(wishList);

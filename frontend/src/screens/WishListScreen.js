@@ -6,111 +6,70 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removefromcart } from "./../Redux/Actions/cartActions";
 import WhatsAppIcon from "../components/WhatsAppIcon";
-import Message from "../components/LoadingError/Error";
-import { createWishList } from "../Redux/Actions/WishListActions";
+// import Message from "../components/LoadingError/Error";
+import { createWishList, deleteWishList, listWishLists } from "../Redux/Actions/WishListActions";
 import { WISHLIST_CREATE_RESET } from "../Redux/Constants/WishListConstants";
 import Loading from "../components/LoadingError/Loading";
+import Message from "../components/LoadingError/Error";
 import Toast from "../components/LoadingError/Toast";
 
-const CartScreen = ({ match, location, history }) => {
+const WishListScreen = ({ match, location, history }) => {
   // currency state
-  const [currency, setCurrency] = useState(location.state.currency);
-  const [conversionRate, setConversionRate] = useState(1);
-  const [defaultCurrency, setDefaultCurrency] = useState(location.state.defaultCurrency);
+//   const [currency, setCurrency] = useState(location.state.currency);
+//   const [conversionRate, setConversionRate] = useState(1);
+//   const [defaultCurrency, setDefaultCurrency] = useState(location.state.defaultCurrency);
+const [showContent, setShowContent] = useState();
 
   window.scrollTo(0, 0);
   const dispatch = useDispatch();
-  const productId = match.params.id;
-  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const wishList = useSelector((state) => state.wishLists);
+  const { loading, error, wishLists } = wishList;
 
-  const wishListCreate = useSelector((state) => state.wishListCreate);
-  const { wishList, success, error, loading } = wishListCreate;
-
-  // const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2);
-  const total = (cartItems.reduce((a, i) => a + i.qty * i.price, 0) * conversionRate).toFixed(2);
 
   useEffect(() => {
-    if (productId) {
-      dispatch(addToCart(productId, qty));
-    }
     // Currency Conversion
-    if(currency === 'ZAR') setDefaultCurrency('R');
-    else setDefaultCurrency('$');
+    // if(currency === 'ZAR') setDefaultCurrency('R');
+    // else setDefaultCurrency('$');
 
-    if (currency !== 'ZAR') {
-      axios.get(`https://api.exchangerate-api.com/v4/latest/ZAR`)
-        .then(response => {
-          setConversionRate(response.data.rates[currency]);
-        });
-      } else setConversionRate(1);
+    // if (currency !== 'ZAR') {
+    //   axios.get(`https://api.exchangerate-api.com/v4/latest/ZAR`)
+    //     .then(response => {
+    //       setConversionRate(response.data.rates[currency]);
+    //     });
+    //   } else setConversionRate(1);
+    dispatch(listWishLists());
 
-      if (success) {
-        history.push(`/`);
-        dispatch({ type: WISHLIST_CREATE_RESET });
-      }
-  }, [dispatch, productId, qty, currency, success]);
+  }, [dispatch]);
 
   const checkOutHandler = () => {
     // history.push("/login?redirect=shipping");
     history.push({
       pathname: "/shipping",
-      state: { currency, defaultCurrency }
+    //   state: { currency, defaultCurrency }
     })
   };
-
-  const wishListHandler = (e) => {
-    e.preventDefault();
-    // Calculate Price
-    const addDecimals = (num) => {
-      return (Math.round(num * 100) / 100).toFixed(2);
-    };
-
-    cart.itemsPrice = addDecimals(
-      cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-    );
-    cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
-    cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
-    cart.totalPrice = (
-      Number(cart.itemsPrice) +
-      Number(cart.shippingPrice) +
-      Number(cart.taxPrice)
-    ).toFixed(2);
-    // console.log(">>>> "+(cart.totalPrice* conversionRate).toFixed(2));
-    dispatch(
-      createWishList({
-        wishListItems: cartItems,
-        quantity: cartItems.length,
-        currency: currency,
-        itemsPrice: (cart.itemsPrice * conversionRate).toFixed(2),
-        shippingPrice: (cart.shippingPrice * conversionRate).toFixed(2),
-        taxPrice: (cart.taxPrice * conversionRate).toFixed(2),
-        totalPrice: (cart.totalPrice * conversionRate).toFixed(2),
-      })
-    );
-  };
-
-  const removeFromCartHandle = (id) => {
-    dispatch(removefromcart(id));
-  };
-  const handleCurrencyChange = (event) => {
-    setCurrency(event.target.value);
-  };
+//   const handleCurrencyChange = (event) => {
+//     setCurrency(event.target.value);
+//   };
+const wishListHandler = (id) => {
+  // e.preventDefault();
+  dispatch(deleteWishList(id));
+  // alert(id);
+}
   return (
     <>
       <Header />
       <WhatsAppIcon />
-      <div className="currency-selector">
+      {/* <div className="currency-selector">
         <select value={currency} onChange={handleCurrencyChange}>
           <option value="ZAR">ZAR</option>
           <option value="USD">USD</option>
         </select>
-      </div>
+      </div> */}
       {/* Cart */}
       {/* Cart Icon */}
-    <div className="cart-icon">
+    {/* <div className="cart-icon">
     <Link to={{
       pathname: "/cart",
       state: { currency, defaultCurrency }
@@ -123,18 +82,19 @@ const CartScreen = ({ match, location, history }) => {
           </div>
         </div>
      </Link>
-    </div>
+    </div> */}
       <div className="container">
-        {/* OPENING */}
-        {loading ? (
-          <Loading />
-        ) : error ? (
-          <Message variant="alert-danger">{error}</Message>
-        ) : (
-        <>
-        {cartItems.length === 0 ? (
+      {loading ? (
+                  <div className="mb-5">
+                    <Loading />
+                  </div>
+                ) : error ? (
+                  <Message variant="alert-danger">{error}</Message>
+                ) : (
+                    <>
+        {wishLists.length === 0 ? (
           <div className=" alert alert-info text-center mt-3">
-            Your cart is empty
+            You have no wishList
             <Link
               className="btn btn-success mx-5 px-5 py-3"
               to="/"
@@ -143,26 +103,24 @@ const CartScreen = ({ match, location, history }) => {
               }}
             >
               SHOPPING NOW
-              
             </Link>
           </div>
         ) : (
-          <>
+            <>
             <div className=" alert alert-info text-center mt-3">
-              Total Cart Products
-              <Link className="text-success mx-2" to="/cart">
-                ({cartItems.length})
-              </Link>
+              WishList Products
             </div>
-            {/* cartiterm */}
-            {cartItems.map((item) => (
-              <div className="cart-iterm row">
-                <div
+            {wishLists.map((wishList, index) => (
+                wishList.wishListItems.map(item => {
+                  return (
+                    <>
+                    <div className="cart-iterm row">
+                {/* <div
                   onClick={() => removeFromCartHandle(item.product)}
                   className="remove-button d-flex justify-content-center align-items-center"
                 >
                   <i className="fas fa-times"></i>
-                </div>
+                </div> */}
                 <div className="cart-image col-md-3">
                   <img src={`http://localhost:5000/images/${item.image}`} alt={item.name} />
                 </div>
@@ -175,6 +133,7 @@ const CartScreen = ({ match, location, history }) => {
                   <h6>QUANTITY</h6>
                   <select
                     value={item.qty}
+                    disabled
                     onChange={(e) =>
                       dispatch(addToCart(item.product, Number(e.target.value)))
                     }
@@ -189,58 +148,51 @@ const CartScreen = ({ match, location, history }) => {
                 <div className="cart-price mt-3 mt-md-0 col-md-2 align-items-sm-end align-items-start  d-flex flex-column justify-content-center col-sm-7">
                   <h6>PRICE</h6>
                   {/* <h4>${item.price}</h4> */}
-                  <h4>{defaultCurrency} {(item.price * conversionRate).toFixed(2)}</h4>
+                  <h4>{wishList.currency} {(item.price)}</h4>
                 </div>
               </div>
-            ))}
-
-            {/* End of cart iterms */}
-            <div className="total">
+              <div className="total">
               <span className="sub">total:</span>
               {/* <span className="total-price">${total}</span> */}
-              <span className="total-price">{defaultCurrency} {total}</span>
+              <span className="total-price">{wishList.currency} {wishList.totalPrice}</span>
+              <input type="hidden" id="wishList_id" name="wishList_id" value={wishList._id}></input>
             </div>
+              </>
+                  );
+                })
+            ))}
             <hr />
             <div className="cart-buttons d-flex align-items-center row">
               <Link 
                 to={{
                   pathname: "/",
-                  state: { currency, defaultCurrency }
+                  // state: { currency, defaultCurrency }
                 }}
                 className="col-md-6 "
                 >
                 <button>Continue To Shopping</button>
               </Link>
-              {total > 0 && (
                 <div className="col-md-6 d-flex justify-content-md-end mt-3 mt-md-0">
                   <button 
                     className="gold-btn" 
-                    onClick={checkOutHandler}
+                    // onClick={checkOutHandler}
                     style={{ marginRight: "1rem" }}
                   >Checkout</button>
                   <button 
                     className="gold-btn"
-                    onClick={wishListHandler}
+                    onClick={()=> wishListHandler(document.querySelector("#wishList_id").value)}
                     style={{ marginLeft: "1rem", backgroundColor: "#ebb450", color: "#000" }}
-                  >Add To WishList</button>
+                  >Empty WishList</button>
                   {/* <button>Checkout</button> */}
                 </div>
-                
-              )}
-            </div>
-            {error && (
-                  <div className="my-3 col-12">
-                    <Message variant="alert-danger">{error}</Message>
-                  </div>
-                )}
-          </>
-        )}
-        {/* CLOSSING */}
+            </div>            
+            </>
+        ) }
         </>
-        )}
+                ) }
       </div>
-    </>
+      </>
   );
 };
 
-export default CartScreen;
+export default WishListScreen;

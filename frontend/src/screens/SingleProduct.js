@@ -19,7 +19,6 @@ const SingleProduct = ({ history, match, location }) => {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-
   // currency state
   const [currency, setCurrency] = useState(location.state.currency);
   const [conversionRate, setConversionRate] = useState(1);
@@ -66,10 +65,21 @@ const SingleProduct = ({ history, match, location }) => {
   const AddToCartHandle = (e) => {
     e.preventDefault();
     // history.push(`/cart/${productId}?qty=${qty}`);
-    history.push({
-      pathname: `/cart/${productId}?qty=${qty}`,
-      state: { currency, defaultCurrency }
-    });    
+    if(localStorage.getItem("userInfo")) {
+      history.push({
+        pathname: `/cart/${productId}?qty=${qty}`,
+        state: { currency, defaultCurrency }
+      })
+    } else {
+      history.push({
+        pathname: "/login",
+        // state: { currency, defaultCurrency }
+      });
+    }
+    // history.push({
+    //   pathname: `/cart/${productId}?qty=${qty}`,
+    //   state: { currency, defaultCurrency }
+    // });    
   };
   const submitHandler = (e) => {
     e.preventDefault();

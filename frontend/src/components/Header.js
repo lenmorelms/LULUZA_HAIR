@@ -127,7 +127,7 @@ const Header = () => {
                 </Link>
                 </div>
                 <div>
-                <Link className="header-categories" to="">
+                <Link className="header-categories" to={localStorage.getItem("userInfo") ? "/wishlist" : "/login"}>
                   WishList
                 </Link>
                 </div>
@@ -236,7 +236,7 @@ const Header = () => {
                 </Link>
                 </div>
                 <div>
-                <Link className="mobile-categories" to="">
+                <Link className="mobile-categories" to={localStorage.getItem("userInfo") ? "/wishlist" : "/login"}>
                   WishList
                 </Link>
                 </div>
