@@ -20,13 +20,13 @@ const Orders = (props) => {
         </tr>
       </thead>
       <tbody>
-        {orders.map((order) => (
+        {orders && orders.map((order) => (
           <tr key={order._id}>
             <td>
-              <b>{order.user.name}</b>
+              <b>{order.username}</b>
             </td>
-            <td>{order.user.email}</td>
-            <td>${order.totalPrice}</td>
+            <td>{order.useremail}</td>
+            <td>{order.currency} {order.totalPrice}</td>
             <td>
               {order.isPaid ? (
                 <span className="badge rounded-pill alert-success">

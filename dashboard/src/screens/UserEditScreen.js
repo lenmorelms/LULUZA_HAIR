@@ -2,19 +2,19 @@ import React from "react";
 import { useParams } from 'react-router-dom';
 import Sidebar from "./../components/sidebar";
 import Header from "./../components/Header";
-import OrderMain from "../components/orders/OrderMain";
+import EditUserMain from "./../components/users/EditUserMain";
 
-const OrderScreen = () => {
-  const { keyword, pagenumber } = useParams();
+const UserEditScreen = () => {
+  const { id: userId } = useParams();
   return (
     <>
-      <Sidebar />
+    <Sidebar />
       <main className="main-wrap">
         <Header />
-        <OrderMain keyWord={keyword} pageNumber={pagenumber} />
+        <EditUserMain userId={userId} />
       </main>
     </>
   );
 };
 
-export default OrderScreen;
+export default UserEditScreen;

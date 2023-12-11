@@ -11,6 +11,9 @@ import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
 import moment from "moment";
 
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 const OrderDetailmain = (props) => {
   const { orderId } = props;
   const dispatch = useDispatch();
@@ -29,8 +32,18 @@ const OrderDetailmain = (props) => {
     dispatch(deliverOrder(order));
   };
 
+  const downloadOrder = (id) => {
+    const input = document.getElementById('content_card');
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 0, 0);
+      pdf.save(`${id}.pdf`);
+    });
+  }
+
   return (
-    <section className="content-main">
+    <section className="content-main" id="content_main" style={{paddingLeft: '10%'}}>
       <div className="content-header">
         <Link to="/orders" className="btn btn-dark text-white">
           Back To Orders
@@ -42,7 +55,7 @@ const OrderDetailmain = (props) => {
       ) : error ? (
         <Message variant="alert-danger">{error}</Message>
       ) : (
-        <div className="card">
+        <div className="card col-lg-10" id="content_card">
           <header className="card-header p-3 Header-green">
             <div className="row align-items-center ">
               <div className="col-lg-6 col-md-6">
@@ -58,7 +71,7 @@ const OrderDetailmain = (props) => {
                 </small>
               </div>
               <div className="col-lg-6 col-md-6 ms-auto d-flex justify-content-end align-items-center">
-                <select
+                {/* <select
                   className="form-select d-inline-block"
                   style={{ maxWidth: "200px" }}
                 >
@@ -67,10 +80,13 @@ const OrderDetailmain = (props) => {
                   <option>Confirmed</option>
                   <option>Shipped</option>
                   <option>Delivered</option>
-                </select>
-                <Link className="btn btn-success ms-2" to="#">
+                </select> */}
+                {/* <Link className="btn btn-success ms-2" to="#" onClick={downloadOrder(order._id)}>
                   <i className="fas fa-print"></i>
-                </Link>
+                </Link> */}
+                <button className="btn btn-success ms-2" onClick={()=>downloadOrder(order._id)}>
+                  <i className="fas fa-print"></i>
+                </button>
               </div>
             </div>
           </header>

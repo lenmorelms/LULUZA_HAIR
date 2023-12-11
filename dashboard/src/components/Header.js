@@ -34,7 +34,7 @@ const Header = () => {
       <div className="col-search">
         <form className="searchform">
           <div className="input-group">
-            <input
+            {/* <input
               list="search_terms"
               type="text"
               className="form-control"
@@ -42,7 +42,7 @@ const Header = () => {
             />
             <button className="btn btn-light bg" type="button">
               <i className="far fa-search"></i>
-            </button>
+            </button> */}
           </div>
           <datalist id="search_terms">
             <option value="Products" />
@@ -71,9 +71,9 @@ const Header = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="#">
+            {/* <Link className="nav-link" to="#">
               English
-            </Link>
+            </Link> */}
           </li>
           <li className="dropdown nav-item">
             <Link className="dropdown-toggle" data-bs-toggle="dropdown" to="#">
@@ -86,7 +86,7 @@ const Header = () => {
             <div className="dropdown-menu dropdown-menu-end">
               <Link className="dropdown-item" to="/">
                 {/* My profile */}
-                Full Name
+                Admin
               </Link>
               {/* <Link className="dropdown-item" to="#">
                 Settings

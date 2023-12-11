@@ -18,7 +18,7 @@ import {
 import axios from "axios";
 import { logout } from "./userActions";
 
-export const listProducts = () => async (dispatch, getState) => {
+export const listProducts = (keyWord = " ", pageNumber = " ") => async (dispatch, getState) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
@@ -32,7 +32,7 @@ export const listProducts = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/products/all`, config);
+    const { data } = await axios.get(`/api/products/all?keyword=${keyWord}&pageNumber=${pageNumber}`, config);
 
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {

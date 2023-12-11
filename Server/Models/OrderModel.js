@@ -7,6 +7,14 @@ const orderSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
+    username: {
+      type: String,
+      required: true,
+    },
+    useremail: {
+      type: String,
+      required: true,
+    },
     orderItems: [
       {
         name: { type: String, required: true },

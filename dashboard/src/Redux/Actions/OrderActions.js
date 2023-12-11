@@ -12,7 +12,7 @@ import {
 import { logout } from "./userActions";
 import axios from "axios";
 
-export const listOrders = () => async (dispatch, getState) => {
+export const listOrders = (keyWord = "", pageNumber = " ") => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_LIST_REQUEST });
 
@@ -26,7 +26,7 @@ export const listOrders = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/orders/all`, config);
+    const { data } = await axios.get(`/api/orders/all?keyword=${keyWord}&pageNumber=${pageNumber}`, config);
 
     dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
   } catch (error) {

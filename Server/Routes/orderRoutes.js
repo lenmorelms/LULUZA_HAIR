@@ -29,6 +29,8 @@ orderRouter.post(
       const order = new Order({
         orderItems,
         user: req.user._id,
+        username: req.user.fname+" "+req.user.lname,
+        useremail: req.user.email,
         shippingAddress,
         paymentMethod,
         currency,
@@ -50,10 +52,27 @@ orderRouter.get(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const orders = await Order.find({})
+    const pageSize = 20;
+    const page = Number(req.query.pageNumber) || 1;
+    const keyword = req.query.keyword
+      ? {
+          username: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
+      : {};
+    const count = await Order.countDocuments({ ...keyword });
+    // const orders = await Order.find({})
+    //   .sort({ _id: -1 })
+    //   .populate("user", "id name email");
+    // res.json(orders);
+    const orders = await Order.find({ ...keyword })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
       .sort({ _id: -1 })
       .populate("user", "id name email");
-    res.json(orders);
+    res.json({ orders, page, pages: Math.ceil(count / pageSize) });
   })
 );
 // USER LOGIN ORDERS

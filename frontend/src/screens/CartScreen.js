@@ -29,10 +29,19 @@ const CartScreen = ({ match, location, history }) => {
   const wishListCreate = useSelector((state) => state.wishListCreate);
   const { wishList, success, error, loading } = wishListCreate;
 
+  // const userLogin = useSelector((state) => state.userLogin);
+  // const { userInfo } = userLogin;
+
   // const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2);
   const total = (cartItems.reduce((a, i) => a + i.qty * i.price, 0) * conversionRate).toFixed(2);
 
   useEffect(() => {
+    if(!localStorage.getItem("userInfo")) {
+      history.push({
+        pathname: "/login",
+        // state: { currency, defaultCurrency }
+      });
+    }
     if (productId) {
       dispatch(addToCart(productId, qty));
     }

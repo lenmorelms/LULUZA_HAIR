@@ -11,6 +11,8 @@ import OrderDetailScreen from "./screens/OrderDetailScreen";
 import AddProduct from "./screens/AddProduct";
 import Login from "./screens/LoginScreen";
 import UsersScreen from "./screens/UsersScreen";
+import AddUser from "./screens/AddUser";
+import UserEditScreen from "./screens/UserEditScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import NotFound from "./screens/NotFound";
 // import PrivateRouter from "./PrivateRouter";
@@ -42,17 +44,25 @@ function App() {
           {/* <Route path="/" element={<HomeScreen />} /> */}
 
           <Route path="/products" element={user ? <ProductScreen /> : <Navigate to="/login" replace />} />
+          <Route path="/products/search/:keyword" element={user ? <ProductScreen /> : <Navigate to="/login" replace />} />
+          <Route path="products/page/:pagenumber" element={user ? <ProductScreen /> : <Navigate to="/login" replace />} />
           {/* <Route path="/products" element={<ProductScreen />} /> */}
 
           <Route path="/category" element={user ? <CategoriesScreen /> : <Navigate to="/login" replace />} />
           {/* <Route path="/category" element={<CategoriesScreen />} /> */}
 
-          <Route path="/orders" element={<OrderScreen />} />
-          <Route path="/order/:id" element={<OrderDetailScreen />} />
+          <Route path="/orders" element={user ? <OrderScreen /> : <Navigate to="/login" replace />} />
+          <Route path="/orders/search/:keyword" element={user ? <OrderScreen /> : <Navigate to="/login" replace />} />
+          <Route path="orders/page/:pagenumber" element={user ? <OrderScreen /> : <Navigate to="/login" replace />} />
+          <Route path="/order/:id" element={user ? <OrderDetailScreen /> : <Navigate to="/login" replace /> } />
           <Route path="/addproduct" element={user ? <AddProduct /> : <Navigate to="/login" replace />} />
           {/* <Route path="/addproduct" element={<AddProduct />} /> */}
 
-          <Route path="/users" element={<UsersScreen />} />
+          <Route path="/users" element={user ? <UsersScreen /> : <Navigate to="/login" replace />} />
+          <Route path="/addusers" element={user ? <AddUser /> : <Navigate to="/login" replace />} />
+          <Route path="/users/:id/edit" element={user ? <UserEditScreen /> : <Navigate to="/login" replace />} />
+          <Route path="/users/search/:keyword" element={user ? <UsersScreen /> : <Navigate to="/login" replace />} />
+          <Route path="users/page/:pagenumber" element={user ? <UsersScreen /> : <Navigate to="/login" replace />} />
           <Route path="/product/:id/edit" element={user ? <ProductEditScreen /> : <Navigate to="/login" replace />} />
           {/* <Route path="/category/:id/edit" element={user ? <CategoriesScreen /> : <Navigate to="/login" replace />} /> */}
           {/* <Route path="/product/:id/edit" element={<ProductEditScreen />} /> */}
