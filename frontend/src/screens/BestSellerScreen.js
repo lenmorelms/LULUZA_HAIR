@@ -1,21 +1,21 @@
 import React from "react";
 import Header from "./../components/Header";
-import ShopSectionCategory from "./../components/homeComponents/ShopSectionCategory";
+// import CurrencySelector from "../components/CurrencySelector";
+import WhatsAppIcon from "../components/WhatsAppIcon";
 import ContactInfo from "./../components/homeComponents/ContactInfo";
 import CalltoActionSection from "./../components/homeComponents/CalltoActionSection";
 import Footer from "./../components/Footer";
-import WhatsAppIcon from "../components/WhatsAppIcon";
+import ShopSectionBest from "../components/homeComponents/ShopSectionBest";
 
-const CategoryScreen = ({ match }) => {
+const BestSellerScreen = ({ match }) => {
   window.scrollTo(0, 0);
-  const category = match.params.category;
   const keyword = match.params.keyword;
   const pagenumber = match.params.pagenumber;
   return (
     <div>
       <Header />
       <WhatsAppIcon />
-      <ShopSectionCategory category={category} keyword={keyword} pagenumber={pagenumber} />
+      <ShopSectionBest keyword={keyword} pagenumber={pagenumber} />
       <CalltoActionSection />
       <ContactInfo />
       <Footer />
@@ -23,4 +23,4 @@ const CategoryScreen = ({ match }) => {
   );
 };
 
-export default CategoryScreen;
+export default BestSellerScreen;

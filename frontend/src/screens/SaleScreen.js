@@ -1,21 +1,26 @@
 import React from "react";
 import Header from "./../components/Header";
-import ShopSectionCategory from "./../components/homeComponents/ShopSectionCategory";
+// import CurrencySelector from "../components/CurrencySelector";
+import WhatsAppIcon from "../components/WhatsAppIcon";
 import ContactInfo from "./../components/homeComponents/ContactInfo";
 import CalltoActionSection from "./../components/homeComponents/CalltoActionSection";
 import Footer from "./../components/Footer";
-import WhatsAppIcon from "../components/WhatsAppIcon";
+import ShopSectionSale from "../components/homeComponents/ShopSectionSale";
+import Banner from "../components/homeComponents/Banners";
 
-const CategoryScreen = ({ match }) => {
+const SaleScreen = ({ match }) => {
   window.scrollTo(0, 0);
-  const category = match.params.category;
   const keyword = match.params.keyword;
   const pagenumber = match.params.pagenumber;
   return (
     <div>
       <Header />
       <WhatsAppIcon />
-      <ShopSectionCategory category={category} keyword={keyword} pagenumber={pagenumber} />
+      <Banner 
+        link="http://localhost:3000/sale" 
+        imageUrl="http://localhost:5000/images/sale.jpg" 
+      />
+      <ShopSectionSale keyword={keyword} pagenumber={pagenumber} />
       <CalltoActionSection />
       <ContactInfo />
       <Footer />
@@ -23,4 +28,4 @@ const CategoryScreen = ({ match }) => {
   );
 };
 
-export default CategoryScreen;
+export default SaleScreen;

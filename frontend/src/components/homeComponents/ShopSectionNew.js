@@ -5,12 +5,11 @@ import { FaShoppingCart } from "react-icons/fa";
 import Rating from "./Rating";
 import Pagination from "./pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { listProduct } from "../../Redux/Actions/ProductActions";
+import { listProductNew } from "../../Redux/Actions/ProductActions";
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
-import { changeCurrency } from "../../Redux/Actions/currencyActions";
 
-const ShopSection = (props) => {
+const ShopSectionNew = (props) => {
   const [currency, setCurrency] = useState('ZAR');
   const [defaultCurrency, setDefaultCurrency] = useState('R');
   const [conversionRate, setConversionRate] = useState(1);
@@ -20,14 +19,11 @@ const ShopSection = (props) => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products, page, pages } = productList;
-
-  // const _currency_ = useSelector((state) => state.currency);
-  // const { currencySymbol } = _currency_;
+  const productListNew = useSelector((state) => state.productListNew);
+  const { loading, error, products, page, pages } = productListNew;
 
   useEffect(() => {
-    dispatch(listProduct(keyword, pagenumber));
+    dispatch(listProductNew(keyword, pagenumber));
   }, [dispatch, keyword, pagenumber]);
 
   useEffect(() => {
@@ -132,4 +128,4 @@ const ShopSection = (props) => {
   );
 };
 
-export default ShopSection;
+export default ShopSectionNew;

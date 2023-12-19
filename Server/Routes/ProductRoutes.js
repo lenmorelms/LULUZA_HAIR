@@ -66,6 +66,112 @@ productRoute.get(
   })
 );
 
+// GET PRODUCTS ACCORDING TO CATEGORY
+productRoute.get(
+  '/category/:category', 
+  asyncHandler(async (req, res) => {
+  const category = req.params.category;
+  const pageSize = 12;
+  const page = Number(req.query.pageNumber) || 1;
+  const keyword = req.query.keyword ? {
+    name: {
+      $regex: req.query.keyword,
+      $options: 'i'
+    }
+  } : {};
+  const count = await Product.countDocuments({
+    ...keyword,
+    categories: {
+      $in: [category]
+    }
+  });
+  const products = await Product.find({
+      ...keyword,
+      categories: {
+        $in: [category]
+      }
+    })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
+    .sort({
+      _id: -1
+    });
+  res.json({
+    products,
+    page,
+    pages: Math.ceil(count / pageSize)
+  });
+}));
+
+// GET PRODUCTS ACCORDING TO NEW ARRIVALS
+productRoute.get(
+  "/new",
+  asyncHandler(async (req, res) => {
+    const pageSize = 12;
+    const page = Number(req.query.pageNumber) || 1;
+    const keyword = req.query.keyword
+      ? {
+          name: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
+      : {};
+    const count = await Product.countDocuments({ ...keyword });
+    const products = await Product.find({ ...keyword })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort({ updatedAt: -1 });
+    res.json({ products, page, pages: Math.ceil(count / pageSize) });
+  })
+);
+
+// GET PRODUCTS ACCORDING TO BEST SELLER
+productRoute.get(
+  "/best",
+  asyncHandler(async (req, res) => {
+    const pageSize = 12;
+    const page = Number(req.query.pageNumber) || 1;
+    const keyword = req.query.keyword
+      ? {
+          name: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
+      : {};
+    const count = await Product.countDocuments({ ...keyword });
+    const products = await Product.find({ ...keyword })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort({ saleCount: -1 });
+    res.json({ products, page, pages: Math.ceil(count / pageSize) });
+  })
+);
+
+// GET PRODUCTS ACCORDING TO SALE
+productRoute.get(
+  "/sale",
+  asyncHandler(async (req, res) => {
+    const pageSize = 12;
+    const page = Number(req.query.pageNumber) || 1;
+    const keyword = req.query.keyword
+      ? {
+          name: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
+      : {};
+    const count = await Product.countDocuments({ ...keyword });
+    const products = await Product.find({ ...keyword, sale: true })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort({ _id: -1 });
+    res.json({ products, page, pages: Math.ceil(count / pageSize) });
+  })
+);
+
 // ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PEGINATION
 productRoute.get(
   "/all",
@@ -108,19 +214,19 @@ productRoute.get(
 );
 
 // GET PRODUCTS BY CATEGORY
-productRoute.get(
-  "/:category",
-  asyncHandler(async (req, res) => {
-    // mongo db search through an array
-    // const product = await Product.findById(req.params.category);
-    if (product) {
-      res.json(product);
-    } else {
-      res.status(404);
-      throw new Error("Product not Found");
-    }
-  })
-);
+// productRoute.get(
+//   "/:category",
+//   asyncHandler(async (req, res) => {
+//     // mongo db search through an array
+//     // const product = await Product.findById(req.params.category);
+//     if (product) {
+//       res.json(product);
+//     } else {
+//       res.status(404);
+//       throw new Error("Product not Found");
+//     }
+//   })
+// );
 
 // PRODUCT REVIEW
 productRoute.post(

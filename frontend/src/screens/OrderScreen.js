@@ -219,7 +219,7 @@ const OrderScreen = ({ match }) => {
                 </table>
                 {!order.isPaid && (
                   <div className="col-12">
-                    {loadingPay && <Loading />}
+                    {/* {loadingPay && <Loading />}
                     {!sdkReady ? (
                       <Loading />
                     ) : (
@@ -227,7 +227,8 @@ const OrderScreen = ({ match }) => {
                         amount={order.totalPrice}
                         onSuccess={successPaymentHandler}
                       />
-                    )}
+                    )} */}
+                    <PayPalButton />
                   </div>
                 )}
               </div>

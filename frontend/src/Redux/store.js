@@ -6,6 +6,9 @@ import {
   productDetailsReducer,
   productListReducer,
   productListCategoryReducer,
+  productListNewReducer,
+  productListBestReducer,
+  productListSaleReducer,
 } from "./Reducers/ProductReducers";
 import { categorytListReducer } from "./Reducers/CategoryReducers";
 import { cartReducer } from "./Reducers/CartReducers";
@@ -27,14 +30,19 @@ import {
   wishListsReducer,
   wishListDeleteReducer,
 } from "./Reducers/WishListReducers";
+import { currencyReducer } from "./Reducers/CurrencyReducers";
 
 const reducer = combineReducers({
   productList: productListReducer,
   productListCategory: productListCategoryReducer,
+  productListNew: productListNewReducer,
+  productListBest: productListBestReducer,
+  productListSale: productListSaleReducer,
   productDetails: productDetailsReducer,
   productReviewCreate: productCreateReviewReducer,
   categoryList: categorytListReducer,
   cart: cartReducer,
+  currency: currencyReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
@@ -63,12 +71,17 @@ const shippingAddressFromLocalStorage = localStorage.getItem("shippingAddress")
   ? JSON.parse(localStorage.getItem("shippingAddress"))
   : {};
 
+// currency
+const currency = "USD";
+
 const initialState = {
   cart: {
     cartItems: cartItemsFromLocalStorage,
     shippingAddress: shippingAddressFromLocalStorage,
   },
   userLogin: { userInfo: userInfoFromLocalStorage },
+
+  currency: { currencySymbol: currency },
 };
 
 const middleware = [thunk];

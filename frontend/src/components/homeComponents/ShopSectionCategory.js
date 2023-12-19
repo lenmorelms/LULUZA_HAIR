@@ -1,34 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { FaShoppingCart } from "react-icons/fa";
 import Rating from "./Rating";
 import Pagination from "./pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { listProduct } from "../../Redux/Actions/ProductActions";
+import { listProductCategory } from "../../Redux/Actions/ProductActions";
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
-import { changeCurrency } from "../../Redux/Actions/currencyActions";
 
 const ShopSection = (props) => {
   const [currency, setCurrency] = useState('ZAR');
   const [defaultCurrency, setDefaultCurrency] = useState('R');
   const [conversionRate, setConversionRate] = useState(1);
   const { keyword, pagenumber } = props;
+  const { category } = useParams();
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products, page, pages } = productList;
-
-  // const _currency_ = useSelector((state) => state.currency);
-  // const { currencySymbol } = _currency_;
+  const productListCategory = useSelector((state) => state.productListCategory);
+  const { loading, error, products, page, pages } = productListCategory;
 
   useEffect(() => {
-    dispatch(listProduct(keyword, pagenumber));
-  }, [dispatch, keyword, pagenumber]);
+    dispatch(listProductCategory(category, keyword, pagenumber));
+  }, [dispatch, category, keyword, pagenumber]);
 
   useEffect(() => {
     if(currency === 'ZAR') setDefaultCurrency('R');
@@ -69,6 +66,7 @@ const ShopSection = (props) => {
         </div>
      </Link>
     </div>
+    {console.log(">>>>>>>>>>>>>"+products)}
       <div className="container">
         <div className="section">
           <div className="row">

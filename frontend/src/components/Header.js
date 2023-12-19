@@ -107,22 +107,22 @@ const Header = () => {
                   }}
                   style={{ transition: "0.5s" }}
                 >
-                <Link className="header-categories header-collection" id="header_collection" to="###">
+                <Link className="header-categories header-collection" id="header_collection" to="#" >
                   Collection
                 </Link>
                 </div>
                 <div>
-                <Link className="header-categories" to="">
+                <Link className="header-categories" to="/new">
                   New Arrivals
                 </Link>
                 </div>
                 <div>
-                <Link className="header-categories" to="">
+                <Link className="header-categories" to="/best">
                   Best Seller
                 </Link>
                 </div>
                 <div>
-                <Link className="header-categories" to="">
+                <Link className="header-categories" to="/sale">
                   Sale
                 </Link>
                 </div>
@@ -203,7 +203,7 @@ const Header = () => {
                   }}
                   style={{ transition: "0.5s" }}
                 >
-                <Link className="header-categories mobile-collection" id="header_collection" to="">
+                <Link className="header-categories mobile-collection" id="header_collection" to="#">
                   Collection
                 </Link>
                 {isCollectionHovered && (
@@ -221,17 +221,17 @@ const Header = () => {
                 )}
                 </div>
                 <div>
-                <Link className="mobile-categories" to="">
+                <Link className="mobile-categories" to="/new">
                   New Arrivals
                 </Link>
                 </div>
                 <div>
-                <Link className="mobile-categories" to="">
+                <Link className="mobile-categories" to="/best">
                   Best Seller
                 </Link>
                 </div>
                 <div>
-                <Link className="mobile-categories" to="">
+                <Link className="mobile-categories" to="/sale">
                   Sale
                 </Link>
                 </div>

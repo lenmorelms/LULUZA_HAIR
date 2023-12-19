@@ -17,6 +17,9 @@ import OrderScreen from "./screens/OrderScreen";
 import NotFound from "./screens/NotFound";
 import PrivateRouter from "./PrivateRouter";
 import WishListScreen from "./screens/WishListScreen";
+import NewArrivalScreen from "./screens/NewArrivalScreen";
+import BestSellerScreen from "./screens/BestSellerScreen";
+import SaleScreen from "./screens/SaleScreen";
 
 const App = () => {
   return (
@@ -26,11 +29,11 @@ const App = () => {
         <Route path="/search/:keyword" component={HomeScreen} exact />
         <Route path="/page/:pagenumber" component={HomeScreen} exact />
         <Route path="/category/:category" component={CategoryScreen} exact />
-        <Route
-          path="/search/:keyword/page/:pageNumber"
-          component={HomeScreen}
-          exact
-        />
+        <Route path="/new" component={NewArrivalScreen} exact />
+        <Route path="/best" component={BestSellerScreen} exact />
+        <Route path="/sale" component={SaleScreen} exact />
+        <Route path="/search/:keyword/page/:pageNumber" component={HomeScreen} exact />
+
         <Route path="/products/:id" component={SingleProduct} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
