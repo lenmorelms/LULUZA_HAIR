@@ -7,7 +7,7 @@ import User from "./../Models/UserModel.js";
 const userRouter = express.Router();
 
 // LOGIN
-userRouter.post(
+userRouter.get(
   "/login",
   asyncHandler(async (req, res) => {
     const { email, password } = req.body;
