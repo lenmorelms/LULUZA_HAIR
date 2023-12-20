@@ -40,8 +40,8 @@ function App() {
       <Router>
         <Routes>
           {/* <Route path="/" element={<PrivateRouter/>} /> */}
-          <Route path="/" element={user ? <HomeScreen /> : <Navigate to="/login" replace />} />
-          {/* <Route path="/" element={<HomeScreen />} /> */}
+          {/* <Route path="/" element={user ? <HomeScreen /> : <Navigate to="/login" replace />} /> */}
+          <Route path="/" element={<HomeScreen />} />
 
           <Route path="/products" element={user ? <ProductScreen /> : <Navigate to="/login" replace />} />
           <Route path="/products/search/:keyword" element={user ? <ProductScreen /> : <Navigate to="/login" replace />} />
