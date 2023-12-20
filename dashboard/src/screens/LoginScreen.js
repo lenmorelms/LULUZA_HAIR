@@ -38,7 +38,7 @@ const Login = () => {
           {error && <Message variant="alert-danger">{error}</Message>}
           {loading && <Loading />}
           <h4 className="card-title mb-4 text-center">Sign in</h4>
-          <form onSubmit={submitHandler}>
+          <form onSubmit={submitHandler} method="post">
             <div className="mb-3">
               <input
                 className="form-control"
