@@ -33,6 +33,6 @@ app.use("/api/orders", orderRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 1000;
+const PORT = process.env.PORT;
 
 app.listen(PORT, console.log(`server run in port ${PORT}`));
