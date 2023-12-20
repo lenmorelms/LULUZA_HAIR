@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { FaShoppingCart } from "react-icons/fa";
+import React, { useEffect } from "react";
 import Header from "./../components/Header";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removefromcart } from "./../Redux/Actions/cartActions";
+import { addToCart } from "./../Redux/Actions/cartActions";
 import WhatsAppIcon from "../components/WhatsAppIcon";
 // import Message from "../components/LoadingError/Error";
-import { createWishList, deleteWishList, listWishLists } from "../Redux/Actions/WishListActions";
-import { WISHLIST_CREATE_RESET } from "../Redux/Constants/WishListConstants";
+import { deleteWishList, listWishLists } from "../Redux/Actions/WishListActions";
 import Loading from "../components/LoadingError/Loading";
 import Message from "../components/LoadingError/Error";
-import Toast from "../components/LoadingError/Toast";
 
 const WishListScreen = ({ match, location, history }) => {
   // currency state
 //   const [currency, setCurrency] = useState(location.state.currency);
 //   const [conversionRate, setConversionRate] = useState(1);
 //   const [defaultCurrency, setDefaultCurrency] = useState(location.state.defaultCurrency);
-const [showContent, setShowContent] = useState();
+// const [showContent, setShowContent] = useState();
 
   window.scrollTo(0, 0);
   const dispatch = useDispatch();
@@ -42,13 +38,12 @@ const [showContent, setShowContent] = useState();
 
   }, [dispatch]);
 
-  const checkOutHandler = () => {
-    // history.push("/login?redirect=shipping");
-    history.push({
-      pathname: "/shipping",
-    //   state: { currency, defaultCurrency }
-    })
-  };
+  // const checkOutHandler = () => {
+  //   history.push({
+  //     pathname: "/shipping",
+  //     state: { currency, defaultCurrency }
+  //   })
+  // };
 //   const handleCurrencyChange = (event) => {
 //     setCurrency(event.target.value);
 //   };

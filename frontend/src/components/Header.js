@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/Actions/userActions";
 
 import { FaSearch } from "react-icons/fa";
-import { FaShoppingBag, FaShoppingCart, FaShoppingBasket } from "react-icons/fa";
 import { listCategory } from "../Redux/Actions/CategoryActions";
 
 const Header = () => {
@@ -14,8 +13,8 @@ const Header = () => {
   const dispatch = useDispatch();
   let history = useHistory();
 
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  // const cart = useSelector((state) => state.cart);
+  // const { cartItems } = cart;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const categoryList = useSelector((state) => state.categoryList);

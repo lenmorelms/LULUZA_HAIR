@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "../../Redux/Actions/ProductActions";
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
-import { changeCurrency } from "../../Redux/Actions/currencyActions";
 
 const ShopSection = (props) => {
   const [currency, setCurrency] = useState('ZAR');

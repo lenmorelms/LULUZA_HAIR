@@ -8,9 +8,9 @@ import WhatsAppIcon from "../components/WhatsAppIcon";
 
 const PaymentScreen = ({ history, location }) => {
   // currency state
-  const [currency, setCurrency] = useState(location.state.currency);
-  const [conversionRate, setConversionRate] = useState(1);
-  const [defaultCurrency, setDefaultCurrency] = useState(location.state.defaultCurrency);
+  const [currency/*, setCurrency*/] = useState(location.state.currency);
+  // const [conversionRate, setConversionRate] = useState(1);
+  const [defaultCurrency/*, setDefaultCurrency*/] = useState(location.state.defaultCurrency);
   window.scrollTo(0, 0);
 
   const cart = useSelector((state) => state.cart);

@@ -10,7 +10,6 @@ import Message from "../components/LoadingError/Error";
 import { createWishList } from "../Redux/Actions/WishListActions";
 import { WISHLIST_CREATE_RESET } from "../Redux/Constants/WishListConstants";
 import Loading from "../components/LoadingError/Loading";
-import Toast from "../components/LoadingError/Toast";
 
 const CartScreen = ({ match, location, history }) => {
   // currency state
@@ -27,7 +26,7 @@ const CartScreen = ({ match, location, history }) => {
   const { cartItems } = cart;
 
   const wishListCreate = useSelector((state) => state.wishListCreate);
-  const { wishList, success, error, loading } = wishListCreate;
+  const { /* wishList, */ success, error, loading } = wishListCreate;
 
   // const userLogin = useSelector((state) => state.userLogin);
   // const { userInfo } = userLogin;
@@ -60,7 +59,7 @@ const CartScreen = ({ match, location, history }) => {
         history.push(`/`);
         dispatch({ type: WISHLIST_CREATE_RESET });
       }
-  }, [dispatch, productId, qty, currency, success]);
+  }, [dispatch, history, productId, qty, currency, success]);
 
   const checkOutHandler = () => {
     // history.push("/login?redirect=shipping");

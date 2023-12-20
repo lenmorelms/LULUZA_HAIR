@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect/*, useState */} from "react";
 import { Link } from "react-router-dom";
 import Header from "./../components/Header";
 import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrderDetails, payOrder } from "../Redux/Actions/OrderActions";
+import { getOrderDetails/*, payOrder*/ } from "../Redux/Actions/OrderActions";
 import Loading from "./../components/LoadingError/Loading";
 import Message from "./../components/LoadingError/Error";
 import moment from "moment";
@@ -12,14 +12,14 @@ import { ORDER_PAY_RESET } from "../Redux/Constants/OrderConstants";
 
 const OrderScreen = ({ match }) => {
   window.scrollTo(0, 0);
-  const [sdkReady, setSdkReady] = useState(false);
+  // const [sdkReady, setSdkReady] = useState(false);
   const orderId = match.params.id;
   const dispatch = useDispatch();
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
   const orderPay = useSelector((state) => state.orderPay);
-  const { loading: loadingPay, success: successPay } = orderPay;
+  const { /*loading: loadingPay,*/ success: successPay } = orderPay;
 
   if (!loading) {
     const addDecimals = (num) => {
@@ -39,7 +39,7 @@ const OrderScreen = ({ match }) => {
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
       script.async = true;
       script.onload = () => {
-        setSdkReady(true);
+        // setSdkReady(true);
       };
       document.body.appendChild(script);
     };
@@ -50,14 +50,14 @@ const OrderScreen = ({ match }) => {
       if (!window.paypal) {
         addPayPalScript();
       } else {
-        setSdkReady(true);
+        // setSdkReady(true);
       }
     }
   }, [dispatch, orderId, successPay, order]);
 
-  const successPaymentHandler = (paymentResult) => {
-    dispatch(payOrder(orderId, paymentResult));
-  };
+  // const successPaymentHandler = (paymentResult) => {
+  //   dispatch(payOrder(orderId, paymentResult));
+  // };
 
   return (
     <>

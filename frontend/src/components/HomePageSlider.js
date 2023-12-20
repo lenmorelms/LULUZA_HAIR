@@ -1,5 +1,4 @@
 import React from 'react';
-import Slider from 'react-slick';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
 import withAutoplay from 'react-awesome-slider/dist/autoplay';

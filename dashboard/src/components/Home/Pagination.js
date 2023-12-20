@@ -15,15 +15,15 @@ const Pagination = (props) => {
               <Link
                 className="page-link"
                 to={
-                  source=="products" ? (
+                  source==="products" ? (
                   keyword
                     ? `/products/search/${keyword}/page/${x + 1}`
                     : `/products/page/${x + 1}`
-                  ) : source=="users" ? (
+                  ) : source==="users" ? (
                     keyword
                     ? `/users/search/${keyword}/page/${x + 1}`
                     : `/users/page/${x + 1}`
-                  ) : source=="orders" ? (
+                  ) : source==="orders" ? (
                     keyword
                     ? `/orders/search/${keyword}/page/${x + 1}`
                     : `/orders/page/${x + 1}`

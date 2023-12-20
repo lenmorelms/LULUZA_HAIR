@@ -5,7 +5,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import Rating from "./Rating";
 import Pagination from "./pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { listProduct, listProductBest } from "../../Redux/Actions/ProductActions";
+import { listProductBest } from "../../Redux/Actions/ProductActions";
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
 

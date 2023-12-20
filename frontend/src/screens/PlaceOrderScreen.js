@@ -10,9 +10,9 @@ import Message from "./../components/LoadingError/Error";
 import WhatsAppIcon from "../components/WhatsAppIcon";
 
 const PlaceOrderScreen = ({ history, location }) => {
-  const [currency, setCurrency] = useState(location.state.currency);
+  const [currency/*, setCurrency*/] = useState(location.state.currency);
   const [conversionRate, setConversionRate] = useState(1);
-  const [defaultCurrency, setDefaultCurrency] = useState(location.state.defaultCurrency);
+  const [defaultCurrency/*, setDefaultCurrency*/] = useState(location.state.defaultCurrency);
   window.scrollTo(0, 0);
 
   const dispatch = useDispatch();
