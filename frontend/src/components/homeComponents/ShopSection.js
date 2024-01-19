@@ -20,7 +20,7 @@ const ShopSection = (props) => {
   const { cartItems } = cart;
 
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products, page, pages } = productList;
+  const { loading, error, products = [], page, pages } = productList;
 
   // const _currency_ = useSelector((state) => state.currency);
   // const { currencySymbol } = _currency_;
