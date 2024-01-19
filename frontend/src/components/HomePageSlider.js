@@ -15,9 +15,12 @@ const HomePageSlider = () => {
         interval={3000}
         // cssModule={styles}
       >
-        <div data-src="http://localhost:5000/images/sale.jpg" />
+        {/* <div data-src="http://localhost:5000/images/sale.jpg" />
         <div data-src="http://localhost:5000/images/new_arrival.jpg" />
-        <div data-src="http://localhost:5000/images/sale.jpg" />
+        <div data-src="http://localhost:5000/images/sale.jpg" /> */}
+        <div data-src="https://luluza-server.onrender.com/images/sale.jpg" />
+        <div data-src="https://luluza-server.onrender.com/images/new_arrival.jpg" />
+        <div data-src="https://luluza-server.onrender.com/images/sale.jpg" />
       </AutoplaySlider>
     );
 }

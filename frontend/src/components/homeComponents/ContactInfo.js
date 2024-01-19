@@ -36,7 +36,8 @@ const ContactInfo = () => {
               <span><a href="https://www.google.com/"><img src="https://superbalist.com/public/images/social/youtube-vector-2021.svg" alt="youtube" /></a></span>
             </div>
             <div className="footer-image">
-              <img src="http://localhost:5000/images/footer_logo_2.png" alt="Logo"/>
+              {/* <img src="http://localhost:5000/images/footer_logo_2.png" alt="Logo"/> */}
+              <img src="https://luluza-server.onrender.com/images/footer_logo_2.png" alt="Logo"/>
             </div>
           </div>
         </div>
