@@ -150,4 +150,21 @@ orderRouter.put(
   })
 );
 
+// DELETE ORDER
+  orderRouter.delete(
+  "/:id",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      await Order.deleteOne({ _id: order._id });
+      res.json({ message: "Order deleted" });
+    } else {
+      res.status(404);
+      throw new Error("Order not Found");
+    }
+  })
+);
+
 export default orderRouter;

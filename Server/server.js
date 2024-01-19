@@ -8,7 +8,9 @@ import { errorHandler, notFound } from "./Middleware/Errors.js";
 import userRouter from "./Routes/UserRoutes.js";
 import orderRouter from "./Routes/orderRoutes.js";
 import categoryRoute from "./Routes/CategoryRoutes.js";
-// import wishListRouter from "./Routes/WishListRoutes.js";
+import wishListRouter from "./Routes/WishListRoutes.js";
+import returnsRoute from "./Routes/ReturnsRoutes.js";
+import vouchersRouter from "./Routes/VouchersRoutes.js";
 
 dotenv.config();
 connectDatabase();
@@ -24,6 +26,9 @@ app.use("/api/products", productRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/wishlist", wishListRouter);
+app.use("/api/returns", returnsRoute);
+app.use("/api/vouchers", vouchersRouter);
 // PAYPAL
 // app.get("/api/config/paypal", (req, res) => {
 //   res.send(process.env.PAYPAL_CLIENT_ID);
