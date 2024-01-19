@@ -1,4 +1,5 @@
-import React, { useEffect/*, useState */} from "react";
+import React, { useEffect,/*, useState */
+useState} from "react";
 import { Link } from "react-router-dom";
 import Header from "./../components/Header";
 import { PayPalButton } from "react-paypal-button-v2";
@@ -9,8 +10,13 @@ import Message from "./../components/LoadingError/Error";
 import moment from "moment";
 import axios from "axios";
 import { ORDER_PAY_RESET } from "../Redux/Constants/OrderConstants";
+import ContactInfo from "../components/homeComponents/ContactInfo";
+import Footer from "../components/Footer";
+// import { payVoucher } from "../Redux/Actions/VouchersActions";
 
-const OrderScreen = ({ match }) => {
+const OrderScreen = ({ match, location }) => {
+  const [voucherCode, setVoucherCode] = useState("");
+  const [selectedPaymentMethod] = useState(location.state.selectedPaymentMethod);
   window.scrollTo(0, 0);
   // const [sdkReady, setSdkReady] = useState(false);
   const orderId = match.params.id;
@@ -58,6 +64,11 @@ const OrderScreen = ({ match }) => {
   // const successPaymentHandler = (paymentResult) => {
   //   dispatch(payOrder(orderId, paymentResult));
   // };
+
+  // const submitVoucherPayment = (paymentResult) => {
+  //   dispatch(payVoucher(voucherCode, orderId, order.currency, order.totalPrice));
+  //   dispatch(payOrder(orderId, paymentResult));    
+  // }
 
   return (
     <>
@@ -217,25 +228,69 @@ const OrderScreen = ({ match }) => {
                     </tr>
                   </tbody>
                 </table>
-                {!order.isPaid && (
-                  <div className="col-12">
-                    {/* {loadingPay && <Loading />}
-                    {!sdkReady ? (
-                      <Loading />
+                {/* TESTING PURPOSES */}
+                {selectedPaymentMethod === "PayPal" ? (
+                  !order.isPaid && (
+                
+                    <div className="col-12">
+                      {/* {loadingPay && <Loading />}
+                      {!sdkReady ? (
+                        <Loading />
+                      ) : (
+                        <PayPalButton
+                          amount={order.totalPrice}
+                          onSuccess={successPaymentHandler}
+                        />
+                      )} */}
+                      <PayPalButton />
+                    </div>
+                  )
+                  ) : (
+                  selectedPaymentMethod === "PayFast" ? (
+                    !order.isPaid && (
+                
+                      <div className="col-12">
+                        <button className="btn round-gold-btn">PayFast</button>
+                      </div>
+                    )
+                  ) : (
+                  selectedPaymentMethod === "Voucher" ? (
+                    !order.isPaid && (
+                
+                    <div className="col-12">
+                    <form className="container form-container" /*onSubmit={submitVoucherPayment}*/ >
+                      <div className="form-contact">
+                        <input
+                          className="form-control"
+                          type="text"
+                          placeholder="XX-XXXXX"
+                          name="amount"
+                          value={voucherCode}
+                          onChange={(e) => setVoucherCode(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <button type="submit" className="round-gold-btn">PAY</button>
+                    </form>
+                    </div>
+                    )
                     ) : (
-                      <PayPalButton
-                        amount={order.totalPrice}
-                        onSuccess={successPaymentHandler}
-                      />
-                    )} */}
-                    <PayPalButton />
-                  </div>
+                      !order.isPaid && (
+                
+                        <div className="col-12">
+                          <div>Select Payment Method</div>
+                        </div>
+                      )
+                    )
+                  )
                 )}
               </div>
             </div>
           </>
         )}
       </div>
+      <ContactInfo />
+      <Footer />
     </>
   );
 };

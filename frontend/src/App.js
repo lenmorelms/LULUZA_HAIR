@@ -20,6 +20,14 @@ import WishListScreen from "./screens/WishListScreen";
 import NewArrivalScreen from "./screens/NewArrivalScreen";
 import BestSellerScreen from "./screens/BestSellerScreen";
 import SaleScreen from "./screens/SaleScreen";
+import AboutUsScreen from "./screens/AboutUsScreen";
+import ContactUsScreen from "./screens/ContactUsScreen";
+import PaymentOptionsScreen from "./screens/PaymentOptionsScreen";
+import ReturnsPolicyScreen from "./screens/ReturnsPolicyScreen";
+import PrivacyPolicyScreen from "./screens/PrivacyPolicyScreen";
+import ReturnsScreen from "./screens/returnsScreen";
+import VouchersScreen from "./screens/VouchersScreen";
+import PayVoucherScreen from "./screens/PayVoucherScreen";
 
 const App = () => {
   return (
@@ -44,6 +52,16 @@ const App = () => {
         <PrivateRouter path="/payment" component={PaymentScreen} />
         <PrivateRouter path="/placeorder" component={PlaceOrderScreen} />
         <PrivateRouter path="/order/:id" component={OrderScreen} />
+
+        <Route path="/about-us" component={AboutUsScreen} exact />
+        <Route path="/contact-us" component={ContactUsScreen} exact />
+        <Route path="/payment-options" component={PaymentOptionsScreen} exact />
+        <Route path="/returns-policy" component={ReturnsPolicyScreen} exact />
+        <Route path="/privacy-policy" component={PrivacyPolicyScreen} exact />
+        <Route path="/returns" component={ReturnsScreen} exact />
+        <Route path="/vouchers" component={VouchersScreen} exact />
+        <Route path="/pay-voucher/:id" component={PayVoucherScreen} exact />
+
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>

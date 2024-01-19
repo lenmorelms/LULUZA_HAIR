@@ -7,6 +7,8 @@ import Orders from "./../components/profileComponents/Orders";
 import moment from "moment";
 import { listMyOrders } from "../Redux/Actions/OrderActions";
 import WhatsAppIcon from "../components/WhatsAppIcon";
+import ContactInfo from "../components/homeComponents/ContactInfo";
+import Footer from "../components/Footer";
 
 const ProfileScreen = () => {
   window.scrollTo(0, 0);
@@ -108,6 +110,8 @@ const ProfileScreen = () => {
           </div>
         </div>
       </div>
+      <ContactInfo />
+      <Footer />
     </>
   );
 };

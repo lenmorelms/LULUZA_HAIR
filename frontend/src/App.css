@@ -29,6 +29,21 @@ span {
   padding: 0;
   margin: 0;
 }
+/* INPUT TYPE NUMBER */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input[type=number]:not(:focus):invalid {
+  border-color: red;
+}
+
 input:focus,
 select:focus,
 textarea:focus {
@@ -365,6 +380,7 @@ textarea:focus {
 .contactInfo {
   background-color: #1c1c1c;
   padding: 30px 0;
+  margin-top: 1rem;
   color: #DFDFDB;
 }
 .contact-Box,
@@ -508,12 +524,12 @@ textarea:focus {
   margin: 1rem;
 }
 .gold-btn {
-  background-color: #ebb450;
+  background-color: #ebb450 !important;
 }
 .round-gold-btn {
   border-radius: 4px;
-  background: #ebb450;
-  color: #000000;
+  background: #ebb450 !important;
+  color: #000000 !important;
   width: 100%;
   height: 50px;
   border: 0;
@@ -524,14 +540,24 @@ textarea:focus {
 }
 .round-gold-btn:hover,
 .round-gold-btn:focus {
-  background: #000000;
-  color: #ffffff;
+  background: #000000 !important;
+  color: #ffffff !important;
   transition: 0.5s;
 }
 
+/* RETURN FORM */
+.form-center {
+  display: flex;
+  justify-content: center;
+}
+/* GIFT CARD */
+.gift-card {
+  background-color: #9dbef2 !important;
+}
 /* LOGIN */
 .login-center {
   padding: 50px 0;
+  min-height: 100%;
 }
 .Login,
 .Login2 {
@@ -561,7 +587,8 @@ textarea:focus {
   transition: 0.5s;
 }
 .Login button,
-.Login2 button {
+.Login2 button,
+.button {
   width: 100%;
   margin-top: 20px;
   padding: 20px 0;
@@ -648,6 +675,20 @@ textarea:focus {
 }
 .form input {
   padding: 20px 10px;
+  font-size: 17px;
+  background-color: #e5fee9;
+}
+.form-contact {
+  padding: 10px 0;
+}
+.form-contact label {
+  padding: 7px 0;
+  color: #8a8a8a;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.form-contact input {
+  padding: 10px 10px;
   font-size: 17px;
   background-color: #e5fee9;
 }
@@ -832,7 +873,15 @@ textarea:focus {
   background-color: #1cb803;
   color: #ffffff;
 }
-
+/* Pay Voucher screen */
+.pay-voucher-row {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.pay-voucher-row div:first-child {
+  color: #6c757d;
+}
 /* Pagination */
 .pagination .page-link {
   padding: 10px 30px;

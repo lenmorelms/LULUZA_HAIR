@@ -8,6 +8,8 @@ import WhatsAppIcon from "../components/WhatsAppIcon";
 import { deleteWishList, listWishLists } from "../Redux/Actions/WishListActions";
 import Loading from "../components/LoadingError/Loading";
 import Message from "../components/LoadingError/Error";
+import ContactInfo from "../components/homeComponents/ContactInfo";
+import Footer from "../components/Footer";
 
 const WishListScreen = ({ match, location, history }) => {
   // currency state
@@ -15,8 +17,6 @@ const WishListScreen = ({ match, location, history }) => {
 //   const [conversionRate, setConversionRate] = useState(1);
 //   const [defaultCurrency, setDefaultCurrency] = useState(location.state.defaultCurrency);
 // const [showContent, setShowContent] = useState();
-
-  window.scrollTo(0, 0);
   const dispatch = useDispatch();
 
   const wishList = useSelector((state) => state.wishLists);
@@ -34,9 +34,18 @@ const WishListScreen = ({ match, location, history }) => {
     //       setConversionRate(response.data.rates[currency]);
     //     });
     //   } else setConversionRate(1);
-    dispatch(listWishLists());
 
-  }, [dispatch]);
+    // dispatch(listWishLists());
+    if(localStorage.getItem("userInfo")) {
+      dispatch(listWishLists());
+    } else {
+      history.push({
+        pathname: "/login",
+        // state: { currency, defaultCurrency }
+      });
+    }
+
+  }, [dispatch, history]);
 
   // const checkOutHandler = () => {
   //   history.push({
@@ -186,6 +195,8 @@ const wishListHandler = (id) => {
         </>
                 ) }
       </div>
+      <ContactInfo />
+      <Footer />
       </>
   );
 };

@@ -1,7 +1,16 @@
-import React from "react";
+import React, {} from "react";
+// import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+// import { listReturnsCount } from "../Redux/Actions/ReturnsActions";
 
 const Sidebar = () => {
+  // const returnsListCount = useSelector((state) => state.returnsListCount);
+  // const { returnsCount } = returnsListCount;
+
+  // const dispatch = useDispatch();
+  // useEffect(()=>{
+  //   dispatch(listReturnsCount);
+  // }, [dispatch]);
   return (
     <div>
       <aside className="navbar-aside" id="offcanvas_aside">
@@ -72,6 +81,16 @@ const Sidebar = () => {
               >
                 <i className="icon fas fa-bags-shopping"></i>
                 <span className="text">Orders</span>
+              </NavLink>
+            </li>
+            <li className="menu-item">
+              <NavLink
+                activeClassName="active"
+                className="menu-link"
+                to="/returns"
+              >
+                <i className="icon fas fa-bags-shopping"></i>
+                <span className="text">Return Requests</span>
               </NavLink>
             </li>
             <li className="menu-item">

@@ -14,6 +14,8 @@ import Loading from "../components/LoadingError/Loading";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../Redux/Constants/ProductConstants";
 import moment from "moment";
 import WhatsAppIcon from "../components/WhatsAppIcon";
+import ContactInfo from "../components/homeComponents/ContactInfo";
+import Footer from "../components/Footer";
 
 const SingleProduct = ({ history, match, location }) => {
   const [qty, setQty] = useState(1);
@@ -284,6 +286,8 @@ const SingleProduct = ({ history, match, location }) => {
           </>
         )}
       </div>
+      <ContactInfo />
+      <Footer />
     </>
   );
 };

@@ -27,6 +27,10 @@ const Pagination = (props) => {
                     keyword
                     ? `/orders/search/${keyword}/page/${x + 1}`
                     : `/orders/page/${x + 1}`
+                  ) : source === "returns" ? (
+                    keyword
+                    ? `/returns/search/${keyword}/page/${x + 1}`
+                    : `/returns/page/${x + 1}`
                   ) : ""
                 }
               >

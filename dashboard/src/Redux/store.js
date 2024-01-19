@@ -29,6 +29,7 @@ import {
   orderDetailsReducer,
   orderListReducer,
 } from "./Reducers/OrderReducres";
+import { returnsListReducer, listReturnsDetailsReducer, returnsListCountReducer, returnsRestoreOrderReducer } from "./Reducers/ReturnsReducers";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -54,6 +55,11 @@ const reducer = combineReducers({
   orderList: orderListReducer,
   orderDetails: orderDetailsReducer,
   orderDeliver: orderDeliveredReducer,
+  
+  returnsList: returnsListReducer,
+  returnsListCount: returnsListCountReducer,
+  returnsRestoreOrder: returnsRestoreOrderReducer,
+  returnsDetails: listReturnsDetailsReducer,
 });
 
 // login

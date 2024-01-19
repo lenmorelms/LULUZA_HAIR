@@ -7,7 +7,8 @@ import { toast } from "react-toastify";
 import { updateUserProfile } from "../../Redux/Actions/userActions";
 
 const ProfileTabs = () => {
-  const [name, setName] = useState("");
+  const [fname, setFName] = useState("");
+  const [lname, setLName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -30,7 +31,8 @@ const ProfileTabs = () => {
 
   useEffect(() => {
     if (user) {
-      setName(user.name);
+      setFName(user.fname);
+      setLName(user.lname);
       setEmail(user.email);
     }
   }, [dispatch, user]);
@@ -43,7 +45,7 @@ const ProfileTabs = () => {
         toastId.current = toast.error("Password does not match", Toastobjects);
       }
     } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, password }));
+      dispatch(updateUserProfile({ id: user._id, fname, lname, email, password }));
       if (!toast.isActive(toastId.current)) {
         toastId.current = toast.success("Profile Updated", Toastobjects);
       }
@@ -58,18 +60,30 @@ const ProfileTabs = () => {
       <form className="row  form-container" onSubmit={submitHandler}>
         <div className="col-md-6">
           <div className="form">
-            <label for="account-fn">UserName</label>
+            <label for="account-fn">First Name</label>
             <input
               className="form-control"
               type="text"
               required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={fname}
+              onChange={(e) => setFName(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="form">
+            <label for="account-ln">Last Name</label>
+            <input
+              className="form-control"
+              type="text"
+              value={lname}
+              required
+              onChange={(e) => setLName(e.target.value)}
             />
           </div>
         </div>
 
-        <div className="col-md-6">
+        <div className="col-md-10">
           <div className="form">
             <label for="account-email">E-mail Address</label>
             <input
@@ -81,6 +95,7 @@ const ProfileTabs = () => {
             />
           </div>
         </div>
+
         <div className="col-md-6">
           <div className="form">
             <label for="account-pass">New Password</label>
@@ -103,7 +118,7 @@ const ProfileTabs = () => {
             />
           </div>
         </div>
-        <button type="submit">Update Profile</button>
+        <button type="submit" className="round-gold-btn">Update Profile</button>
       </form>
     </>
   );

@@ -18,6 +18,7 @@ import {
   userRegisterReducer,
   userUpdateProfileReducer,
 } from "./Reducers/userReducers";
+import { returnsReducer } from "./Reducers/returnsReducers";
 import {
   orderCreateReducer,
   orderDetailsReducer,
@@ -31,6 +32,7 @@ import {
   wishListDeleteReducer,
 } from "./Reducers/WishListReducers";
 import { currencyReducer } from "./Reducers/CurrencyReducers";
+import { buyVoucherReducer, createVoucherReducer, payVoucherReducer, voucherDetailsReducer } from "./Reducers/VouchersReducers";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -47,6 +49,7 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  returnsRequest: returnsReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
@@ -55,6 +58,10 @@ const reducer = combineReducers({
   wishListDetails: wishListDetailsReducer,
   wishLists: wishListsReducer,
   wishListDelete: wishListDeleteReducer,
+  createGiftVoucher: createVoucherReducer,
+  voucherDetails: voucherDetailsReducer,
+  buyVoucher: buyVoucherReducer,
+  payVoucher: payVoucherReducer,
 });
 
 const cartItemsFromLocalStorage = localStorage.getItem("cartItems")

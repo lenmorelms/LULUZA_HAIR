@@ -172,6 +172,7 @@ const AddProductMain = () => {
                       id="product_price"
                       required
                       name="price"
+                      min="0"
                       value={newProduct.price}
                       onChange={handleChange}
                     />
@@ -187,6 +188,7 @@ const AddProductMain = () => {
                       id="product_count_in_stock"
                       required
                       name="countInStock"
+                      min="0"
                       value={newProduct.countInStock}
                       onChange={handleChange}
                     />

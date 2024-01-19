@@ -5,6 +5,8 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { savePaymentMethod } from "../Redux/Actions/cartActions";
 import Header from "./../components/Header";
 import WhatsAppIcon from "../components/WhatsAppIcon";
+import ContactInfo from "../components/homeComponents/ContactInfo";
+import Footer from "../components/Footer";
 
 const PaymentScreen = ({ history, location }) => {
   // currency state
@@ -34,7 +36,7 @@ const PaymentScreen = ({ history, location }) => {
     // history.push("/placeorder");
     history.push({
       pathname: "/placeorder",
-      state: { currency, defaultCurrency }
+      state: { currency, defaultCurrency, paymentMethod }
     });
   };
   return (
@@ -88,9 +90,24 @@ const PaymentScreen = ({ history, location }) => {
             </div>
           </div>
 
+          <div className="payment-container">
+            <div className="radio-container">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="payment-method"
+                value="Voucher"
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
+              <label className="form-check-label">Voucher</label>
+            </div>
+          </div>
+
           <button type="submit">Continue</button>
         </form>
       </div>
+      <ContactInfo />
+      <Footer />
     </>
   );
 };

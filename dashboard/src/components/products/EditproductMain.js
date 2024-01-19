@@ -196,6 +196,7 @@ const EditProductMain = (props) => {
                           className="form-control"
                           id="product_price"
                           name="price"
+                          min="0"
                           required
                           value={editedProduct.price}
                           onChange={handleChange}
@@ -211,6 +212,7 @@ const EditProductMain = (props) => {
                           className="form-control"
                           id="sale_percentage"
                           name="salePercentage"
+                          min="0"
                           value={editedProduct.salePercentage}
                           onChange={handleChange}
                         />
@@ -236,6 +238,7 @@ const EditProductMain = (props) => {
                             className="form-control"
                             placeholder="Enter Coupon Sale Percentage"
                             name="value"
+                            min="0"
                             value={item.value}
                             onChange={event => handleInputChange(index, event)}
                           />
@@ -256,6 +259,7 @@ const EditProductMain = (props) => {
                           className="form-control"
                           id="product_price"
                           name="countInStock"
+                          min="0"
                           required
                           value={editedProduct.countInStock}
                           onChange={handleChange}

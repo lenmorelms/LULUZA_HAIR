@@ -6,6 +6,9 @@ import Loading from "../components/LoadingError/Loading";
 import { register } from "../Redux/Actions/userActions";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import ContactInfo from "../components/homeComponents/ContactInfo";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 
 const Register = ({ location, history }) => {
   window.scrollTo(0, 0);
@@ -44,7 +47,7 @@ const Register = ({ location, history }) => {
 
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <div className="container d-flex flex-column justify-content-center align-items-center login-center">
         {error && <Message variant="alert-danger">{error}</Message>}
         {loading && <Loading />}
@@ -113,6 +116,8 @@ const Register = ({ location, history }) => {
           </p>
         </form>
       </div>
+      <ContactInfo />
+      <Footer />
     </>
   );
 };

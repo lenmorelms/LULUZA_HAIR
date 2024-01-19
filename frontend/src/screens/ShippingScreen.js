@@ -5,6 +5,8 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import Header from "../components/Header";
 import { saveShippingAddress } from "../Redux/Actions/cartActions";
 import WhatsAppIcon from "../components/WhatsAppIcon";
+import ContactInfo from "../components/homeComponents/ContactInfo";
+import Footer from "../components/Footer";
 
 const ShippingScreen = ({ history, location}) => {
   // currency state
@@ -88,6 +90,8 @@ const ShippingScreen = ({ history, location}) => {
           <button type="submit">Continue</button>
         </form>
       </div>
+      <ContactInfo />
+      <Footer />
     </>
   );
 };

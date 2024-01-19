@@ -8,11 +8,14 @@ import { ORDER_CREATE_RESET } from "../Redux/Constants/OrderConstants";
 import Header from "./../components/Header";
 import Message from "./../components/LoadingError/Error";
 import WhatsAppIcon from "../components/WhatsAppIcon";
+import ContactInfo from "../components/homeComponents/ContactInfo";
+import Footer from "../components/Footer";
 
 const PlaceOrderScreen = ({ history, location }) => {
   const [currency/*, setCurrency*/] = useState(location.state.currency);
   const [conversionRate, setConversionRate] = useState(1);
   const [defaultCurrency/*, setDefaultCurrency*/] = useState(location.state.defaultCurrency);
+  const [selectedPaymentMethod] = useState(location.state.paymentMethod);
   window.scrollTo(0, 0);
 
   const dispatch = useDispatch();
@@ -48,10 +51,14 @@ const PlaceOrderScreen = ({ history, location }) => {
         });
     } else setConversionRate(1);
     if (success) {
-      history.push(`/order/${order._id}`);
+      // history.push(`/order/${order._id}`);
+      history.push({
+        pathname: `/order/${order._id}`,
+        state: { selectedPaymentMethod }
+      });
       dispatch({ type: ORDER_CREATE_RESET });
     }
-  }, [history, dispatch, success, order, currency]);
+  }, [history, dispatch, success, order, currency, selectedPaymentMethod]);
 
   const placeOrderHandler = () => {
     dispatch(
@@ -204,7 +211,7 @@ const PlaceOrderScreen = ({ history, location }) => {
               </tbody>
             </table>
             {cart.cartItems.length === 0 ? null : (
-              <button type="submit" onClick={placeOrderHandler}>
+              <button type="submit" onClick={placeOrderHandler} style={{ marginBottom: "1rem" }}>
                 PLACE ORDER
               </button>
             )}
@@ -216,6 +223,8 @@ const PlaceOrderScreen = ({ history, location }) => {
           </div>
         </div>
       </div>
+      <ContactInfo />
+      <Footer />
     </>
   );
 };

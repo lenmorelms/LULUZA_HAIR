@@ -10,6 +10,8 @@ import Message from "../components/LoadingError/Error";
 import { createWishList } from "../Redux/Actions/WishListActions";
 import { WISHLIST_CREATE_RESET } from "../Redux/Constants/WishListConstants";
 import Loading from "../components/LoadingError/Loading";
+import ContactInfo from "../components/homeComponents/ContactInfo";
+import Footer from "../components/Footer";
 
 const CartScreen = ({ match, location, history }) => {
   // currency state
@@ -247,6 +249,8 @@ const CartScreen = ({ match, location, history }) => {
         </>
         )}
       </div>
+      <ContactInfo />
+      <Footer />
     </>
   );
 };

@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/productScreen";
 import CategoriesScreen from "./screens/CategoriesScreen";
+import ReturnsScreen from "./screens/ReturnsScreen";
 import OrderScreen from "./screens/OrderScreen";
 import OrderDetailScreen from "./screens/OrderDetailScreen";
 import AddProduct from "./screens/AddProduct";
@@ -19,6 +20,7 @@ import NotFound from "./screens/NotFound";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "./Redux/Actions/ProductActions";
 import { listOrders } from "./Redux/Actions/OrderActions";
+import ReturnsDetailScreen from "./screens/ReturnsDetailScreen";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,6 +52,10 @@ function App() {
 
           <Route path="/category" element={user ? <CategoriesScreen /> : <Navigate to="/login" replace />} />
           {/* <Route path="/category" element={<CategoriesScreen />} /> */}
+
+          <Route path="/returns" element={user ? <ReturnsScreen /> : <Navigate to="/login" replace />} />
+          <Route path="/returns/:id" element={user ? <ReturnsDetailScreen /> : <Navigate to="/login" replace />} />
+          <Route path="/returns/search/:keyword" element={user ? <ReturnsScreen /> : <Navigate to="/login" replace />} />
 
           <Route path="/orders" element={user ? <OrderScreen /> : <Navigate to="/login" replace />} />
           <Route path="/orders/search/:keyword" element={user ? <OrderScreen /> : <Navigate to="/login" replace />} />

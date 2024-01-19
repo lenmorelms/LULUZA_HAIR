@@ -8,10 +8,10 @@ const ContactInfo = () => {
           <div className="box-info">
             <h5>Account</h5>
             <ul>
-              <li><a href="https://www.google.com/">Account Details</a></li>
-              <li><a href="https://www.google.com/">Whishlist</a></li>
-              <li><a href="https://www.google.com/">Returns & Exchanges</a></li>
-              <li><a href="https://www.google.com/">Buy Gift Vouchers</a></li>
+              <li><a href="/profile">Account Details</a></li>
+              <li><a href="/wishlist">Whishlist</a></li>
+              <li><a href="/returns">Returns & Exchanges</a></li>
+              <li><a href="/vouchers">Buy Gift Vouchers</a></li>
             </ul>
           </div>
         </div>
@@ -19,11 +19,11 @@ const ContactInfo = () => {
         <div className="box-info">
             <h5>Luluza</h5>
             <ul>
-              <li><a href="https://www.google.com/">About Us</a></li>
-              <li><a href="https://www.google.com/">Contact Us</a></li>
-              <li><a href="https://www.google.com/">Payment Options</a></li>
-              <li><a href="https://www.google.com/">Returns Policy</a></li>
-              <li><a href="https://www.google.com/">Privacy Policy</a></li>
+              <li><a href="/about-us">About Us</a></li>
+              <li><a href="/contact-us">Contact Us</a></li>
+              <li><a href="/payment-options">Payment Options</a></li>
+              <li><a href="/returns-policy">Returns Policy</a></li>
+              <li><a href="/privacy-policy">Privacy Policy</a></li>
             </ul>
           </div>
         </div>
