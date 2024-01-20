@@ -32,7 +32,7 @@ export const listProducts = (keyWord = " ", pageNumber = " ") => async (dispatch
       },
     };
 
-    const { data } = await axios.get(`/api/products/all?keyword=${keyWord}&pageNumber=${pageNumber}`, config);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/products/all?keyword=${keyWord}&pageNumber=${pageNumber}`, config);
 
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -65,7 +65,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`/api/products/${id}`, config);
+    await axios.delete(`https://luluza-server.onrender.com/api/products/${id}`, config);
 
     dispatch({ type: PRODUCT_DELETE_SUCCESS });
   } catch (error) {
@@ -101,7 +101,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 //       };
 
 //       const { data } = await axios.post(
-//         `/api/products/`,
+//         `https://luluza-server.onrender.com/api/products/`,
 //         { name, price, description, image, imageData, countInStock },
 //         config
 //       );
@@ -138,7 +138,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       };
 
       const { data } = await axios.post(
-        `/api/products/`,
+        `https://luluza-server.onrender.com/api/products/`,
         formData,
         config
       );
@@ -162,7 +162,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 export const editProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_EDIT_REQUEST });
-    const { data } = await axios.get(`/api/products/${id}`);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/products/${id}`);
     dispatch({ type: PRODUCT_EDIT_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -196,7 +196,7 @@ export const updateProduct = (formData) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/products/${formData._id}`,
+      `https://luluza-server.onrender.com/api/products/${formData._id}`,
       formData,
       config
     );

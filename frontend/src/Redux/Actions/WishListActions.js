@@ -32,7 +32,7 @@ export const createWishList = (wishList) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/wishlist`, wishList, config);
+    const { data } = await axios.post(`https://luluza-server.onrender.com/api/wishlist`, wishList, config);
     dispatch({ type: WISHLIST_CREATE_SUCCESS, payload: data });
     dispatch({ type: CART_CLEAR_ITEMS, payload: data });
   } catch (error) {
@@ -65,7 +65,7 @@ export const getWishListDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/wishlist/${id}`, config);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/wishlist/${id}`, config);
     dispatch({ type: WISHLIST_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -97,7 +97,7 @@ export const deleteWishList = (id) => async (dispatch, getState) => {
         },
       };
   
-      await axios.delete(`/api/wishlist/${id}`, config);
+      await axios.delete(`https://luluza-server.onrender.com/api/wishlist/${id}`, config);
   
       dispatch({ type: WISHLIST_DELETE_SUCCESS });
     } catch (error) {
@@ -131,7 +131,7 @@ export const listWishLists = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/wishlist/`, config);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/wishlist/`, config);
     dispatch({ type: WISHLIST_LIST_SUCCESS, payload: data });
   } catch (error) {
     const message =

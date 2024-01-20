@@ -17,7 +17,7 @@ export const returnRequest = (orderId, user) => async (dispatch) => {
       };
   
       const { data } = await axios.post(
-        `/api/returns`,
+        `https://luluza-server.onrender.com/api/returns`,
         { orderId, user },
         config
       );

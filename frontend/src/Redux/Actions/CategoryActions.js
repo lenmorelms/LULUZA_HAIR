@@ -12,7 +12,7 @@ import {
 export const listCategory = () => async (dispatch) => {
     try {
       dispatch({ type: CATEGORY_LIST_REQUEST });
-      const { data } = await axios.get(`/api/category`);
+      const { data } = await axios.get(`https://luluza-server.onrender.com/api/category`);
       // const { data } = await axios.get('http://localhost:5000/api/category');
       dispatch({ type: CATEGORY_LIST_SUCCESS, payload: data });
     } catch (error) {
@@ -30,7 +30,7 @@ export const listCategory = () => async (dispatch) => {
 export const listCategoryDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: CATEGORY_DETAILS_REQUEST });
-    const { data } = await axios.get(`/api/category/${id}`);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/category/${id}`);
     dispatch({ type: CATEGORY_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({

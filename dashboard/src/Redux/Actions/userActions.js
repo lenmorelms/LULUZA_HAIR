@@ -44,7 +44,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `/api/users/login`,
+      `https://luluza-server.onrender.com/api/users/login`,
       { email, password },
       config
     );
@@ -96,7 +96,7 @@ export const listUser = (keyWord = "", pageNumber = " ") => async (dispatch, get
       },
     };
 
-    const { data } = await axios.get(`/api/users?keyword=${keyWord}&pageNumber=${pageNumber}`, config);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/users?keyword=${keyWord}&pageNumber=${pageNumber}`, config);
 
     dispatch({ type: USER_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -129,7 +129,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/users/${id}`, config);
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -162,7 +162,7 @@ export const createUser = (formData) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(
-      `/api/users/admin`,
+      `https://luluza-server.onrender.com/api/users/admin`,
       formData,
       config
     );
@@ -186,7 +186,7 @@ export const createUser = (formData) => async (dispatch, getState) => {
 export const editUser = (id) => async (dispatch) => {
   try {
     dispatch({ type: USER_EDIT_REQUEST });
-    const { data } = await axios.get(`/api/users/admin/${id}`);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/users/admin/${id}`);
     dispatch({ type: USER_EDIT_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -220,7 +220,7 @@ export const updateUser = (formData) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/users/admin/${formData._id}`,
+      `https://luluza-server.onrender.com/api/users/admin/${formData._id}`,
       formData,
       config
     );
@@ -256,7 +256,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`/api/users/admin/${id}`, config);
+    await axios.delete(`https://luluza-server.onrender.com/api/users/admin/${id}`, config);
 
     dispatch({ type: USER_DELETE_SUCCESS});
   } catch (error) {

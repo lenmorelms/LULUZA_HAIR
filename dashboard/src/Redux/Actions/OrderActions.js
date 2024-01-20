@@ -26,7 +26,7 @@ export const listOrders = (keyWord = "", pageNumber = " ") => async (dispatch, g
       },
     };
 
-    const { data } = await axios.get(`/api/orders/all?keyword=${keyWord}&pageNumber=${pageNumber}`, config);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/orders/all?keyword=${keyWord}&pageNumber=${pageNumber}`, config);
 
     dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -59,7 +59,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/orders/${id}`, config);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/orders/${id}`, config);
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -92,7 +92,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/orders/${order._id}/delivered`,
+      `https://luluza-server.onrender.com/api/orders/${order._id}/delivered`,
       {},
       config
     );

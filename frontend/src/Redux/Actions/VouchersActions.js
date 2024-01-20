@@ -31,7 +31,7 @@ export const createVoucher = (currency, amount, senderName, recipientName, recip
       };
   
       const { data } = await axios.post(
-        `/api/vouchers`,
+        `https://luluza-server.onrender.com/api/vouchers`,
         { currency, amount, senderName, recipientName, recipientEmail, message },
         config
       );
@@ -64,7 +64,7 @@ export const buyVoucher =
       };
 
       const { data } = await axios.put(
-        `/api/voucher/${voucherId}/buy`,
+        `https://luluza-server.onrender.com/api/voucher/${voucherId}/buy`,
         paymentResult,
         config
       );
@@ -100,7 +100,7 @@ export const payVoucher = (id, orderId, currency, amount) => async (dispatch, ge
     };
 
     const { data } = await axios.put(
-      `/api/vouchers/pay`,
+      `https://luluza-server.onrender.com/api/vouchers/pay`,
       { id, orderId, currency, amount },
       config
     );
@@ -131,7 +131,7 @@ export const getVoucherDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/vouchers/${id}`, config);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/vouchers/${id}`, config);
     dispatch({ type: VOUCHER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     const message =

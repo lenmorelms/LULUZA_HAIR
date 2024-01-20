@@ -39,7 +39,7 @@ export const listProductCategory = (category, keyword = " ", pageNumber = " ") =
   try {
     dispatch({ type: PRODUCT_LIST_CATEGORY_REQUEST });
     const { data } = await axios.get(
-      `/api/products/category/${category}?keyword=${keyword}&pageNumber=${pageNumber}`
+      `https://luluza-server.onrender.com/api/products/category/${category}?keyword=${keyword}&pageNumber=${pageNumber}`
     );
     dispatch({ type: PRODUCT_LIST_CATEGORY_SUCCESS, payload: data });
   } catch (error) {
@@ -58,7 +58,7 @@ export const listProductNew = (keyword = " ", pageNumber = " ") => async (dispat
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     const { data } = await axios.get(
-      `/api/products/new?keyword=${keyword}&pageNumber=${pageNumber}`
+      `https://luluza-server.onrender.com/api/products/new?keyword=${keyword}&pageNumber=${pageNumber}`
     );
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -77,7 +77,7 @@ export const listProductBest = (keyword = " ", pageNumber = " ") => async (dispa
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     const { data } = await axios.get(
-      `/api/products/best?keyword=${keyword}&pageNumber=${pageNumber}`
+      `https://luluza-server.onrender.com/api/products/best?keyword=${keyword}&pageNumber=${pageNumber}`
     );
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -96,7 +96,7 @@ export const listProductSale = (keyword = " ", pageNumber = " ") => async (dispa
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     const { data } = await axios.get(
-      `/api/products/sale?keyword=${keyword}&pageNumber=${pageNumber}`
+      `https://luluza-server.onrender.com/api/products/sale?keyword=${keyword}&pageNumber=${pageNumber}`
     );
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -114,7 +114,7 @@ export const listProductSale = (keyword = " ", pageNumber = " ") => async (dispa
 export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
-    const { data } = await axios.get(`/api/products/${id}`);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/products/${id}`);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -144,7 +144,7 @@ export const createProductReview =
         },
       };
 
-      await axios.post(`/api/products/${productId}/review`, review, config);
+      await axios.post(`https://luluza-server.onrender.com/api/products/${productId}/review`, review, config);
       dispatch({ type: PRODUCT_CREATE_REVIEW_SUCCESS });
     } catch (error) {
       const message =

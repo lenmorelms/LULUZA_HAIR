@@ -33,7 +33,7 @@ export const listCategories = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/category/all`, config);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/category/all`, config);
 
     dispatch({ type: CATEGORY_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -66,7 +66,7 @@ export const deleteCategory = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`/api/category/${id}`, config);
+    await axios.delete(`https://luluza-server.onrender.com/api/category/${id}`, config);
 
     dispatch({ type: CATEGORY_DELETE_SUCCESS });
   } catch (error) {
@@ -100,7 +100,7 @@ export const createCategoryItem = (name, description) => async (dispatch, getSta
       };
 
       const { data } = await axios.post(
-        `/api/category/`,
+        `https://luluza-server.onrender.com/api/category/`,
         { name, description },
         config
       );
@@ -128,7 +128,7 @@ export const createCategoryItem = (name, description) => async (dispatch, getSta
 export const editCategory = (id) => async (dispatch) => {
   try {
     dispatch({ type: CATEGORY_EDIT_REQUEST });
-    const { data } = await axios.get(`/api/category/${id}`);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/category/${id}`);
     dispatch({ type: CATEGORY_EDIT_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -162,7 +162,7 @@ export const updateCategory = (category) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/category/${category._id}`,
+      `https://luluza-server.onrender.com/api/category/${category._id}`,
       category,
       config
     );

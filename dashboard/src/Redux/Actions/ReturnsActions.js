@@ -24,7 +24,7 @@ export const listReturnsCount = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`/api/returns/count`, config);
+    const { data } = await axios.get(`https://luluza-server.onrender.com/api/returns/count`, config);
 
     dispatch({ type: RETURNS_COUNT_SUCCESS, payload: data });
   } catch(error) {
@@ -52,7 +52,7 @@ export const listReturns = (keyWord = "", pageNumber = " ") => async (dispatch, 
         },
       };
   
-      const { data } = await axios.get(`/api/returns?keyword=${keyWord}&pageNumber=${pageNumber}`, config);
+      const { data } = await axios.get(`https://luluza-server.onrender.com/api/returns?keyword=${keyWord}&pageNumber=${pageNumber}`, config);
   
       dispatch({ type: RETURNS_SUCCESS, payload: data });
     } catch (error) {
@@ -85,7 +85,7 @@ export const listReturnsDetails = (id) => async (dispatch, getState) => {
         },
       };
   
-      const { data } = await axios.get(`/api/returns/${id}`, config);
+      const { data } = await axios.get(`https://luluza-server.onrender.com/api/returns/${id}`, config);
       dispatch({ type: RETURNS_DETAILS_SUCCESS, payload: data._id });
     } catch (error) {
       const message =
@@ -116,7 +116,7 @@ export const restoreOrder = (returnsId) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.delete(
-      `/api/returns/${returnsId}`,
+      `https://luluza-server.onrender.com/api/returns/${returnsId}`,
       {},
       config
     );
