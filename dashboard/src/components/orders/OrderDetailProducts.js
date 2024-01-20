@@ -34,7 +34,7 @@ const OrderDetailProducts = (props) => {
               <Link className="itemside" to="#">
                 <div className="left">
                   <img
-                    src={`http://localhost:5000/images/${item.image}`}
+                    src={`https://luluza-server.onrender.com/images/${item.image}`}
                     alt={item.name}
                     style={{ width: "40px", height: "40px" }}
                     className="img-xs"

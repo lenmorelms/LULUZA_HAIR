@@ -12,8 +12,8 @@ const PrivacyPolicyScreen = () => {
       <Header />
       <WhatsAppIcon />
       {/* <Banner 
-        link="http://localhost:3000/about-us" 
-        imageUrl="http://localhost:5000/images/new_arrival.jpg" 
+        link="https://luluza-frontend.vercel.app/about-us" 
+        imageUrl="https://luluza-server.onrender.com/images/new_arrival.jpg" 
       /> */}
       <div style={{ padding: "2rem" }}>
             <h1>PRIVACY POLICY INFORMATION</h1>

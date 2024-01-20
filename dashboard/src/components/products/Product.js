@@ -19,7 +19,7 @@ const Product = (props) => {
         <div className="card card-product-grid shadow-sm">
           <Link to="#" className="img-wrap">
             {/* <img src={product.image} alt="Product" /> */}
-            <img src={`http://localhost:5000/images/${product.image}`} alt="Product" />
+            <img src={`https://luluza-server.onrender.com/images/${product.image}`} alt="Product" />
           </Link>
           <div className="info-wrap">
             <Link to="#" className="title text-truncate">

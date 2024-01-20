@@ -17,8 +17,8 @@ const NewArrivalScreen = ({ match }) => {
       <Header />
       <WhatsAppIcon />
       <Banner 
-        link="http://localhost:3000/new" 
-        imageUrl="http://localhost:5000/images/new_arrival.jpg" 
+        link="https://luluza-frontend.vercel.app/new" 
+        imageUrl="https://luluza-server.onrender.com/images/new_arrival.jpg" 
       />
       <ShopSectionNew keyword={keyword} pagenumber={pagenumber} />
       <CalltoActionSection />

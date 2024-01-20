@@ -291,7 +291,7 @@ const EditProductMain = (props) => {
                         <div></div>
                         :
                         <img 
-                          src={`http://localhost:5000/images/${editedProduct.image}`}
+                          src={`https://luluza-server.onrender.com/images/${editedProduct.image}`}
                           alt={`img-${editedProduct.image}`}
                           style={{ width: '150px' }} // You can set the dimensions as you want
                         />
@@ -315,7 +315,7 @@ const EditProductMain = (props) => {
                             {(editedProduct.gallery).map((gallery, index) => {
                               return(
                               <img 
-                               src={`http://localhost:5000/images/${gallery.filename}`}
+                               src={`https://luluza-server.onrender.com/images/${gallery.filename}`}
                                alt={`img-${index}`}
                                key={index}
                                style={{ width: '150px', padding: '3px' }} // You can set the dimensions as you want

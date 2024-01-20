@@ -17,8 +17,8 @@ const SaleScreen = ({ match }) => {
       <Header />
       <WhatsAppIcon />
       <Banner 
-        link="http://localhost:3000/sale" 
-        imageUrl="http://localhost:5000/images/sale.jpg" 
+        link="https://luluza-frontend.vercel.app/sale" 
+        imageUrl="https://luluza-server.onrender.com/images/sale.jpg" 
       />
       <ShopSectionSale keyword={keyword} pagenumber={pagenumber} />
       <CalltoActionSection />

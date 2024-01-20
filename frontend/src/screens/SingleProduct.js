@@ -131,11 +131,11 @@ const SingleProduct = ({ history, match, location }) => {
             <div className="row">
               <div className="col-md-6">
                 <div className="single-image">
-                  <img src={`http://localhost:5000/images/${product.image}`} alt={product.name} />
+                  <img src={`https://luluza-server.onrender.com/images/${product.image}`} alt={product.name} />
                 </div>
                 <div className="gallery-images">
                   {product.gallery.map((gal, index) => {
-                  return <img key={index} src={`http://localhost:5000/images/${gal.filename}`} alt={product.name} />
+                  return <img key={index} src={`https://luluza-server.onrender.com/images/${gal.filename}`} alt={product.name} />
                 })}
                 </div>
               </div>

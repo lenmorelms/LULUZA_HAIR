@@ -92,7 +92,7 @@ const ShopSection = (props) => {
                             state: { currency, defaultCurrency }
                           }}>
                             <div className="shopBack">
-                              <img src={`http://localhost:5000/images/${product.image}`} alt={product.name} />
+                              <img src={`https://luluza-server.onrender.com/images/${product.image}`} alt={product.name} />
                             </div>
                           </Link>
 
